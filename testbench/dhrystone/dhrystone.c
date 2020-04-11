@@ -392,6 +392,81 @@ __asm (".rept 10");
 __asm ("nop");
 __asm (".endr");
 
+// time measurements
+#include <time.h>
+typedef clock_t CORE_TICKS;
+typedef unsigned int ee_u32;
+#if HAS_FLOAT
+typedef double secs_ret;
+#else
+typedef ee_u32 secs_ret;
+#endif
+
+#define NSECS_PER_SEC 1000000000
+#define CORETIMETYPE clock_t
+//#define GETMYTIME(_t) (*_t=clock())
+#define GETMYTIME(_t) (*_t=0)
+#define MYTIMEDIFF(fin,ini) ((fin)-(ini))
+#define TIMER_RES_DIVIDER 1
+#define SAMPLE_TIME_IMPLEMENTATION 1
+//#define EE_TICKS_PER_SEC (NSECS_PER_SEC / TIMER_RES_DIVIDER)
+
+#define EE_TICKS_PER_SEC 1000
+
+/** Define Host specific (POSIX), or target specific global time variables. */
+static CORETIMETYPE start_time_val, stop_time_val;
+
+/* Function : start_time
+        This function will be called right before starting the timed portion of the benchmark.
+
+        Implementation may be capturing a system timer (as implemented in the example code)
+        or zeroing some system parameters - e.g. setting the cpu clocks cycles to 0.
+*/
+void start_time(void) {
+uint32_t mcyclel;
+        asm volatile ("csrr %0,mcycle"  : "=r" (mcyclel) );
+        start_time_val = mcyclel;
+}
+/* Function : stop_time
+        This function will be called right after ending the timed portion of the benchmark.
+
+        Implementation may be capturing a system timer (as implemented in the example code)
+        or other system parameters - e.g. reading the current value of cpu cycles counter.
+*/
+void stop_time(void) {
+uint32_t mcyclel;
+        asm volatile ("csrr %0,mcycle"  : "=r" (mcyclel) );
+        stop_time_val = mcyclel;
+}
+/* Function : get_time
+        Return an abstract "ticks" number that signifies time on the system.
+
+        Actual value returned may be cpu cycles, milliseconds or any other value,
+        as long as it can be converted to seconds by <time_in_secs>.
+        This methodology is taken to accomodate any hardware or simulated platform.
+        The sample implementation returns millisecs by default,
+        and the resolution is controlled by <TIMER_RES_DIVIDER>
+*/
+CORE_TICKS get_time(void) {
+        CORE_TICKS elapsed=(CORE_TICKS)(MYTIMEDIFF(stop_time_val, start_time_val));
+        return elapsed;
+}
+/* Function : time_in_secs
+        Convert the value returned by get_time to seconds.
+
+        The <secs_ret> type is used to accomodate systems with no support for floating point.
+        Default implementation implemented by the EE_TICKS_PER_SEC macro above.
+*/
+secs_ret time_in_secs(CORE_TICKS ticks) {
+        secs_ret retval=((secs_ret)ticks) / (secs_ret)EE_TICKS_PER_SEC;
+        return retval;
+}
+
+secs_ret time_in_msecs(CORE_TICKS ticks) {
+        secs_ret retval=((secs_ret)ticks) / (secs_ret)(EE_TICKS_PER_SEC / 1000);
+        return retval;
+}
+
 /* Compiler and system dependent definitions: */
 
 
@@ -463,7 +538,7 @@ typedef struct record
 #ifdef CONSTANT
 #define NUM_RUNS (CONSTANT)
 #else
-#define NUM_RUNS (5000000)
+#define NUM_RUNS (1000)
 #endif
 #define DLX_FREQ 200  /* in MHz */
 #define PROC_6 0
@@ -626,7 +701,7 @@ int main (int argc, char *argv[])
 
   printf ("Execution starts, %d runs through Dhrystone\n", Number_Of_Runs);
 
-
+  start_time();
 
   for (Run_Index = 1; Run_Index <= Number_Of_Runs; ++Run_Index)
   {
@@ -723,6 +798,7 @@ int main (int argc, char *argv[])
 
   } /* loop "for Run_Index" */
 
+  stop_time();
 
   printf ("Execution ends%c", '\n');
   printf (" %c", '\n');
@@ -776,15 +852,14 @@ int main (int argc, char *argv[])
   printf ("Str_2_Loc:           %s\n", Str_2_Loc);
   printf ("        should be:   DHRYSTONE PROGRAM, 2'ND STRING%c", '\n');
 
-
-
-
-  User_Time = End_Time - Begin_Time;
+  Begin_Time = start_time_val;
+  End_Time = stop_time_val;
+  User_Time = time_in_msecs(get_time());
  /* microseconds */
 
-  printf("Begin Time = %d\n",Begin_Time);
-  printf("End Time   = %d\n",End_Time);
-
+  printf("Begin Time = %d\n", Begin_Time);
+  printf("End Time   = %d\n", End_Time);
+  printf("User Time   = %d\n", User_Time);
 
   if (User_Time < Too_Small_Time)
   {
@@ -810,12 +885,17 @@ int main (int argc, char *argv[])
 	    printf("(+PROC_6) ");
     printf(" %c", '\n');
 #endif
+
     Microseconds = User_Time / Number_Of_Runs;
     Dhrystones_Per_Second = Number_Of_Runs * 1000 / User_Time;
     printf ("Microseconds for one run through Dhrystone:%c", ' ');
     printf ("%d us / %d runs\n", User_Time,Number_Of_Runs);
-    printf ("Dhrystones per Second:                     %c", ' ');
-    printf ("%d \n", Dhrystones_Per_Second);
+
+    // printf ("Dhrystones per Second:                     %c", ' ');
+    // printf ("%d \n", Dhrystones_Per_Second);
+
+    printf ("Dhrystones per Second:                      ");
+    printf ("%d.%d \n", Number_Of_Runs * 1000 / User_Time, (1000 * 1000 * Number_Of_Runs / User_Time) % 1000);
   }
   //report (0xdeaddead);
 #ifdef MICROBLAZE
