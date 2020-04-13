@@ -131,8 +131,9 @@ module exu_alu_ctl
    // jal  => rs1=pc {pc[31:1],1'b0},  rs2=sext(offset20:1]);    rd=pc+[2,4]
    // jalr => rs1=rs1, rs2=sext(offset20:1]);                    rd=pc+[2,4]
 
-
-   assign bm[31:0] = ( ap.sub ) ? ~b_ff[31:0] : b_ff[31:0];
+   // NIBA - new instruction
+   //assign bm[31:0] = ( ap.sub ) ? ~b_ff[31:0] : b_ff[31:0];
+   assign bm[31:0] = (ap.new_instruction_test) ? 32'b00000000_00000000_00000000_00000001 : ( ap.sub ) ? ~b_ff[31:0] : b_ff[31:0];
 
 
    assign {cout, aout[31:0]} = {1'b0, a_ff[31:0]} + {1'b0, bm[31:0]} + {32'b0, ap.sub};
