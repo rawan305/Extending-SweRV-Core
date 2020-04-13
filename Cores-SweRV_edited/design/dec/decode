@@ -209,6 +209,7 @@ rv32i = {
       fence
       fence_i
       pm_alu
+      new_instruction_test
 }
 
 .decode
