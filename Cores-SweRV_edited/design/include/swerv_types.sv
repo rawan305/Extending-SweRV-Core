@@ -208,6 +208,7 @@ typedef struct packed {
                        logic predict_nt;
                        logic csr_write;
                        logic csr_imm;
+                       logic new_instruction_test;
                        } alu_pkt_t;
 
 typedef struct packed {
@@ -290,6 +291,7 @@ typedef struct packed {
                        logic fence_i;
                        logic pm_alu;
                        logic legal;
+                       logic new_instruction_test;
                        } dec_pkt_t;
 
 
