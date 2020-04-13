@@ -720,6 +720,9 @@ module dec_decode_ctl
    assign i0_ap.bne =    i0_dp.bne;
    assign i0_ap.blt =    i0_dp.blt;
    assign i0_ap.bge =    i0_dp.bge;
+   
+   //NIBA - NEW INSTRUCTION
+   assign i0_ap.new_instruction_test = i0_dp.new_instruction_test
 
 
 
@@ -754,6 +757,9 @@ module dec_decode_ctl
    assign i1_ap.bne =    i1_dp.bne;
    assign i1_ap.blt =    i1_dp.blt;
    assign i1_ap.bge =    i1_dp.bge;
+   
+   //NIBA - NEW INSTRUCTION
+   assign i1_ap.new_instruction_test = i1_dp.new_instruction_test
 
    assign i1_ap.csr_write = 1'b0;
    assign i1_ap.csr_imm   = 1'b0;
@@ -2666,6 +2672,7 @@ assign out.legal = (!i[31]&!i[30]&i[29]&i[28]&!i[27]&!i[26]&!i[25]&!i[24]&!i[23]
 */
    
 //~~~~~~~~~~~~MY NEW EQUATIONS~~~~~~~~~~~~~~~~~~~
+//NIBA - NEW INSTRUCTION
 assign out.alu = (i[2]) | (i[6]) | (i[3]) | (!i[25]&i[4]) | (!i[5]&i[4]);
 
 assign out.rs1 = (!i[14]&!i[13]&!i[2]) | (!i[13]&i[11]&!i[2]) | (i[19]&i[13]&!i[2]) | (
