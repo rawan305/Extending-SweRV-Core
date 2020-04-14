@@ -42,8 +42,8 @@ loop:
 
    li x6,0x00 // result register
    li x10, 0x00
-   li x11, 0x0A
-   // x10=0 start, x11=1 end : for (i=0 ; i < 10 ; i++)
+   li x11, 0x09
+   // x10=0 start, x11=9 end : for (i=0 ; i < 9 ; i++)
 
 ext_loop:
 // first addi will be replaced with the new instruction
