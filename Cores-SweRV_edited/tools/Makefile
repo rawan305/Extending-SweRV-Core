@@ -30,7 +30,7 @@ VCS = vcs
 VERILATOR = verilator
 VLOG = qverilog
 RIVIERA = riviera
-GCC_PREFIX = riscv64-unknown-elf
+GCC_PREFIX = riscv32-unknown-elf# riscv64-unknown-elf
 BUILD_DIR = snapshots/${snapshot}
 TBDIR = ${RV_ROOT}/testbench
 
@@ -161,6 +161,8 @@ program.hex: $(TEST).o $(LINK)
 	$(GCC_PREFIX)-cpp -I${BUILD_DIR}  $<  > $(TEST).cpp.s
 	$(GCC_PREFIX)-as -march=rv32gc $(TEST).cpp.s -o $(TEST).o
 
+# TEST_CFLAGS = -g -O3 -funroll-all-loops -DTIMES -DNOENUM -DHZ=60 
+# -Wno-implicit -save-temps -fno-common -falign-functions=4
 TEST_CFLAGS = -g -O3 -funroll-all-loops
 ABI = -mabi=ilp32 -march=rv32imc
 

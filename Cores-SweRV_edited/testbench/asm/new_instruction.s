@@ -47,7 +47,7 @@ loop:
 
 ext_loop:
 // first addi will be replaced with the new instruction
-   addi x6, x6, 1
+   addi x6, x6, 48
    li x3, STDOUT
    la x4, message
 
