@@ -1,0 +1,128 @@
+Archive Project report for smep
+Mon Jun  1 18:12:19 2020
+Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Archive Project Summary
+  3. Archive Project Messages
+  4. Files Archived
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2019  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------+
+; Archive Project Summary                                        ;
++------------------------+---------------------------------------+
+; Archive Project Status ; Successful - Mon Jun  1 18:12:19 2020 ;
+; Revision Name          ; smep                                  ;
+; Top-level Entity Name  ; swerv_wrapper                         ;
+; Family                 ; Cyclone V                             ;
++------------------------+---------------------------------------+
+
+
++--------------------------+
+; Archive Project Messages ;
++--------------------------+
+Info: File Set 'Source control' contains:
+    Info: Project source and settings files
+    Info: Automatically detected source files
+Warning: Hierarchical Platform Designer systems and custom IP components(_hw.tcl and associated files) are not archived by the Quartus Archiver
+Info: Archive will store files relative to the closest common parent directory
+Info (13213): Using common directory /home/smep/src/Cores-SweRV/
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated archive '/home/smep/src/Cores-SweRV/design/swerv_for_quartus.qar'
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated report 'smep.archive.rpt'
+Info (23030): Evaluation of Tcl script /home/smep/intelFPGA_lite/19.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus Prime Shell was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 1065 megabytes
+    Info: Processing ended: Mon Jun  1 18:12:19 2020
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:01
+
+
++------------------------------------------------------------------------+
+; Files Archived                                                         ;
++------------------------------------------------------------------------+
+; File Name                                                              ;
++------------------------------------------------------------------------+
+; ../configs/snapshots/default/common_defines.vh                         ;
+; /home/smep/intelFPGA_lite/19.1/quartus/linux64/assignment_defaults.qdf ;
+; /home/smep/src/Cores-SweRV/configs/snapshots/default/common_defines.vh ;
+; /home/smep/src/Cores-SweRV/configs/snapshots/default/pic_map_auto.h    ;
+; dbg/dbg.sv                                                             ;
+; dec/dec.sv                                                             ;
+; dec/dec_decode_ctl.sv                                                  ;
+; dec/dec_gpr_ctl.sv                                                     ;
+; dec/dec_ib_ctl.sv                                                      ;
+; dec/dec_tlu_ctl.sv                                                     ;
+; dec/dec_trigger.sv                                                     ;
+; dma_ctrl.sv                                                            ;
+; dmi/dmi_jtag_to_core_sync.v                                            ;
+; dmi/dmi_wrapper.v                                                      ;
+; dmi/rvjtag_tap.sv                                                      ;
+; exu/exu.sv                                                             ;
+; exu/exu_alu_ctl.sv                                                     ;
+; exu/exu_div_ctl.sv                                                     ;
+; exu/exu_mul_ctl.sv                                                     ;
+; ifu/ifu.sv                                                             ;
+; ifu/ifu_aln_ctl.sv                                                     ;
+; ifu/ifu_bp_ctl.sv                                                      ;
+; ifu/ifu_compress_ctl.sv                                                ;
+; ifu/ifu_ic_mem.sv                                                      ;
+; ifu/ifu_iccm_mem.sv                                                    ;
+; ifu/ifu_ifc_ctl.sv                                                     ;
+; ifu/ifu_mem_ctl.sv                                                     ;
+; include/build.h                                                        ;
+; include/global.h                                                       ;
+; include/swerv_types.sv                                                 ;
+; lib/ahb_to_axi4.sv                                                     ;
+; lib/axi4_to_ahb.sv                                                     ;
+; lib/beh_lib.sv                                                         ;
+; lib/mem_lib.sv                                                         ;
+; lib/svci_to_axi4.sv                                                    ;
+; lsu/lsu.sv                                                             ;
+; lsu/lsu_addrcheck.sv                                                   ;
+; lsu/lsu_bus_buffer.sv                                                  ;
+; lsu/lsu_bus_intf.sv                                                    ;
+; lsu/lsu_clkdomain.sv                                                   ;
+; lsu/lsu_dccm_ctl.sv                                                    ;
+; lsu/lsu_dccm_mem.sv                                                    ;
+; lsu/lsu_ecc.sv                                                         ;
+; lsu/lsu_lsc_ctl.sv                                                     ;
+; lsu/lsu_stbuf.sv                                                       ;
+; lsu/lsu_trigger.sv                                                     ;
+; mem.sv                                                                 ;
+; pic_ctrl.sv                                                            ;
+; smep.qpf                                                               ;
+; smep.qsf                                                               ;
+; swerv.sv                                                               ;
+; swerv_wrapper.sv                                                       ;
++------------------------------------------------------------------------+
+
+
