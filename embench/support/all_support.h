@@ -1,29 +1,9 @@
-//
-// Created by nimro on 6/13/2020.
-//
-
-#ifndef EMBENCH_IOT_ALL_SUPPORT_H
-#define EMBENCH_IOT_ALL_SUPPORT_H
-
 #define CPU_MHZ 1
+#include <stddef.h>
+#include <stdio.h>
 
 
 
-/* Common main.c for the benchmarks
-
-   Copyright (C) 2014 Embecosm Limited and University of Bristol
-   Copyright (C) 2018-2019 Embecosm Limited
-
-   Contributor: James Pallister <james.pallister@bristol.ac.uk>
-   Contributor: Jeremy Bennett <jeremy.bennett@embecosm.com>
-
-   This file is part of Embench and was formerly part of the Bristol/Embecosm
-   Embedded Benchmark Suite.
-
-   SPDX-License-Identifier: GPL-3.0-or-later */
-
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~ start block ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 extern int STACK;
 int main (int argc, char *argv[]);
 
@@ -52,24 +32,6 @@ __asm ("beq x0, x0, _finish");
 __asm (".rept 10");
 __asm ("nop");
 __asm (".endr");
-
-
-
-
-
-#include "support.h"
-
-
-
-
-
-
-
-
-
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~ TIME ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
-
 
 // time measurements
 #include <time.h>
@@ -142,12 +104,161 @@ secs_ret time_in_msecs(CORE_TICKS ticks) {
     return retval;
 }
 
+/* Compiler and system dependent definitions: */
+
+
+#define Mic_secs_Per_Second     1000000.0
+/* Berkeley UNIX C returns process times in seconds/HZ */
+
+#ifdef  NOSTRUCTASSIGN
+#define structassign(d, s)      memcpy(&(d), &(s), sizeof(d))
+#else
+#define structassign(d, s)      d = s
+#endif
+
+#ifdef  NOENUM
+#define Ident_1 0
+#define Ident_2 1
+#define Ident_3 2
+#define Ident_4 3
+#define Ident_5 4
+  typedef int   Enumeration;
+#else
+typedef       enum    {Ident_1, Ident_2, Ident_3, Ident_4, Ident_5}
+        Enumeration;
+#endif
+/* for boolean and enumeration types in Ada, Pascal */
+
+/* General definitions: */
+
+/* #include <stdio.h>
+ */
+/* for strcpy, strcmp */
+
+#define Null 0
+/* Value of a Null pointer */
+#define true  1
+#define false 0
+
+typedef int     One_Thirty;
+typedef int     One_Fifty;
+typedef char    Capital_Letter;
+typedef int     Boolean;
+typedef char    Str_30 [31];
+typedef int     Arr_1_Dim [50];
+typedef int     Arr_2_Dim [50] [50];
+
+typedef struct record
+{
+    struct record *Ptr_Comp;
+    Enumeration    Discr;
+    union {
+        struct {
+            Enumeration Enum_Comp;
+            int         Int_Comp;
+            char        Str_Comp [31];
+        } var_1;
+        struct {
+            Enumeration E_Comp_2;
+            char        Str_2_Comp [31];
+        } var_2;
+        struct {
+            char        Ch_1_Comp;
+            char        Ch_2_Comp;
+        } var_3;
+    } variant;
+} Rec_Type, *Rec_Pointer;
+
+
+/*
+//#define NUM_RUNS (20)
+#ifdef CONSTANT
+#define NUM_RUNS (CONSTANT)
+#else
+#define NUM_RUNS (1000)
+#endif
+#define DLX_FREQ 200  // in MHz 
+#define PROC_6 0
+
+void Ireport ( int c ) {
+    // report(c);
+}
+
+#ifndef strcpy
+char *strcpy (char *dst0, const char *src0)
+{
+    char *s = dst0;
+
+    while ((*dst0++ = *src0++));
+
+    return s;
+}
+#endif
+
+#ifndef strcmp
+int strcmp (const char *s1, const char *s2)
+{
+    while (*s1 && *s2 && *s1 == *s2) {
+        s1++;
+        s2++;
+    }
+    return (*(unsigned char *) s1) - (*(unsigned char *) s2);
+}
+#endif
+
+#define DETECTNULL(X) (((X) - 0x01010101) & ~(X) & 0x80808080)
+#define UNALIGNED(X, Y) \
+  (((long)X & (sizeof (long) - 1)) | ((long)Y & (sizeof (long) - 1)))
+
+
+// Global Variables: 
+
+Rec_Pointer     Ptr_Glob,
+        Next_Ptr_Glob;
+int             Int_Glob;
+Boolean         Bool_Glob;
+char            Ch_1_Glob,
+        Ch_2_Glob;
+int             Arr_1_Glob [50];
+int             Arr_2_Glob [50] [50];
+
+
+// forward declaration necessary since Enumeration may not simply be int 
+
+#ifndef REG
+Boolean Reg = false;
+#define REG
+// REG becomes defined as empty 
+// i.e. no register variables   
+#else
+Boolean Reg = true;
+#endif
+
+// variables for time measurement: 
+
+#if DLX || OR1K
+#define Too_Small_Time DLX_FREQ
+#else
+#define Too_Small_Time 1
+#endif
+
+#define TIMER0 0
+#define TIMER1 1
 
 
 
 
+unsigned int	Begin_Time,
+        End_Time,
+        User_Time,
+        Microseconds,
+        Dhrystones_Per_Second;
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BEEBSC ~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+*/
+
+
+
+
 
 /* BEEBS local library variants
 
@@ -168,6 +279,7 @@ secs_ret time_in_msecs(CORE_TICKS ticks) {
 #include <stddef.h>
 #include <string.h>
 #include "beebsc.h"
+
 
 /* Seed for the random number generator */
 
@@ -255,25 +367,26 @@ malloc_beebs (size_t size)
 }
 
 
+
 /* BEEBS version of calloc.
 
    Implement as wrapper for malloc */
-
+/*
 void *
 calloc_beebs (size_t nmemb, size_t size)
 {
-    void *new_ptr = malloc_beebs (nmemb * size);
+  void *new_ptr = malloc_beebs (nmemb * size);
 
-    /* Calloc is defined to zero the memory. OK to use a function here, because
-       it will be handled specially by the compiler anyway. */
+  //Calloc is defined to zero the memory. OK to use a function here, because
+  //   it will be handled specially by the compiler anyway.
 
-    if (NULL != new_ptr)
-        memset (new_ptr, 0, nmemb * size);
+  if (NULL != new_ptr)
+    memset (new_ptr, 0, nmemb * size);
 
-    return new_ptr;
+  return new_ptr;
 }
 
-
+*/
 /* BEEBS version of realloc.
 
    This is primarily to reduce library and OS dependencies. We just have to
@@ -328,7 +441,6 @@ free_beebs (void *ptr __attribute__ ((unused)))
 */
 
 
-// ~~~~~~~~~~~~~~~~~~~~~~~ MAIN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 
 
@@ -337,54 +449,44 @@ free_beebs (void *ptr __attribute__ ((unused)))
 
 
 
-int __attribute__ ((used))
-main (int argc __attribute__ ((unused)),
-      char *argv[] __attribute__ ((unused)))
-{
-    int i;
-    volatile int result;
-    int correct;
-
-    //initialise_board ();
-    initialise_benchmark ();
-    //warm_caches (WARMUP_HEAT);
-
-    printf ("Execution starts\n");
-    start_time();
-    result = benchmark ();
-    stop_time();
-
-    CORE_TICKS total_time=get_time();
-
-    ee_printf("Result/Sec/MHz   : %d.%d\n",1000/time_in_secs(total_time), 100000/time_in_secs(total_time) % 100);
-
-    /* bmarks that use arrays will check a global array rather than int result */
-
-    correct = verify_benchmark (result);
-
-    if (correct == 0)
-    {
-        printf ("Benchmarks passed\n");
-    }
-    else{
-        printf ("Benchmarks failed\n");
-    }
-    return (!correct);
-
-}				/* main () */
-
-
-/*
-   Local Variables:
-   mode: C
-   c-file-style: "gnu"
-   End:
-*/
 
 
 
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`` printf ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // prinf
 #include <stdarg.h>
@@ -596,4 +698,102 @@ printf(const char* format, ...)
 
 
 
-#endif //EMBENCH_IOT_ALL_SUPPORT_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Common main.c for the benchmarks
+
+   Copyright (C) 2014 Embecosm Limited and University of Bristol
+   Copyright (C) 2018-2019 Embecosm Limited
+
+   Contributor: James Pallister <james.pallister@bristol.ac.uk>
+   Contributor: Jeremy Bennett <jeremy.bennett@embecosm.com>
+
+   This file is part of Embench and was formerly part of the Bristol/Embecosm
+   Embedded Benchmark Suite.
+
+   SPDX-License-Identifier: GPL-3.0-or-later */
+
+#include "support.h"
+
+
+
+
+int __attribute__ ((used))
+main (int argc __attribute__ ((unused)),
+      char *argv[] __attribute__ ((unused)))
+{
+    int i;
+    volatile int result;
+    int correct;
+
+    //initialise_board ();
+    initialise_benchmark ();
+    //warm_caches (WARMUP_HEAT);
+
+    printf("Execution starts%c", '\n');
+    start_time();
+    result = benchmark ();
+    stop_time();
+
+    CORE_TICKS total_time=get_time();
+    int val1 = total_time/1000;
+    int val2 = ((total_time*100)/1000) % 100;
+    printf("Result/MHz   : %d.%d%c",val1, val2, '\n');
+
+    /* bmarks that use arrays will check a global array rather than int result */
+
+    correct = verify_benchmark (result);
+
+    if (correct == 0)
+    {
+        printf("Benchmarks passed%c", '\n');
+    }
+    else{
+        printf("Benchmarks failed%c", '\n');
+    }
+    return (!correct);
+
+}				/* main () */
+
+
+/*
+   Local Variables:
+   mode: C
+   c-file-style: "gnu"
+   End:
+*/
+
+
+
