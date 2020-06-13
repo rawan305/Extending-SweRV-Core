@@ -133,7 +133,7 @@ module exu_alu_ctl
 
    // NIBA - new instruction
    //assign bm[31:0] = ( ap.sub ) ? ~b_ff[31:0] : b_ff[31:0];
-   assign bm[31:0] = (ap.new_instruction_test) ? 32'b00000000_00000000_00000000_00000001 : ( ap.sub ) ? ~b_ff[31:0] : b_ff[31:0];
+   assign bm[31:0] = (ap.new_instruction_test) ? 32'b00000000_00000000_00000000_00000011 : ( ap.sub ) ? ~b_ff[31:0] : b_ff[31:0];
 
 
    assign {cout, aout[31:0]} = {1'b0, a_ff[31:0]} + {1'b0, bm[31:0]} + {32'b0, ap.sub};
