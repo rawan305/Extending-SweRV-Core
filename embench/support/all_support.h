@@ -776,7 +776,7 @@ main (int argc __attribute__ ((unused)),
 
     correct = verify_benchmark (result);
 
-    if (correct == 0)
+    if (correct)
     {
         printf("Benchmarks passed%c", '\n');
     }
