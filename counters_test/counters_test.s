@@ -39,9 +39,9 @@ loop:
 
 //~~~~~~~~~~~~~~~~~~~~new_part start ~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	
-   addi x6, x6, 48 //will be replaced with reset counters
-   addi x6, x6, 48 //will be replaced with reset counters
-   addi x6, x6, 48 //will be replaced with start counting
+   addi x6, x6, 48 //will be replaced with reset counters //36
+   addi x6, x6, 48 //will be replaced with reset counters //3a
+   addi x6, x6, 48 //will be replaced with start counting //3e
    
    // FIRST LOOPING
    li x10, 0x00
@@ -51,7 +51,7 @@ loop1:
    addi x10, x10, 1
    bne x10, x11, loop1
    
-   addi x6, x6, 48 //will be replaced with stop counting
+   addi x6, x6, 48 //will be replaced with stop counting //4c
    
    
    // FIRST MESSAGE
@@ -62,12 +62,12 @@ int_loop1:
    sb x5, 0(x3)
    addi x4, x4, 1
    bnez x5, int_loop1
-   addi x6, x6, 48 //will be replaced with read branch counter to x6
+   addi x6, x6, 48 //will be replaced with read branch counter to x6 //6a
    addi x7, x6, 0x30
    sb x7, 0(x3)
    li x7 , 0x20
    sb x7, 0(x3)
-   addi x6, x6, 48 //will be replaced with read branch taken counter to x6
+   addi x6, x6, 48 //will be replaced with read branch taken counter to x6 //7e
    addi x7, x6, 0x30
    sb x7, 0(x3)
    
@@ -89,18 +89,18 @@ int_loop2:
    sb x5, 0(x3)
    addi x4, x4, 1
    bnez x5, int_loop2
-   addi x6, x6, 48 //will be replaced with read branch counter to x6
+   addi x6, x6, 48 //will be replaced with read branch counter to x6 //ae
    addi x7, x6, 0x30
    sb x7, 0(x3)
    li x7 , 0x20
    sb x7, 0(x3)
-   addi x6, x6, 48 //will be replaced with read branch taken counter to x6
+   addi x6, x6, 48 //will be replaced with read branch taken counter to x6 //c2
    addi x7, x6, 0x30
    sb x7, 0(x3)
     
    
    // THIRD LOOPING - does change values
-   addi x6, x6, 48 //will be replaced with start counting
+   addi x6, x6, 48 //will be replaced with start counting //ce
    li x10, 0x00
    li x11, 0x0A
    // x10=0 start, x11=A end : for (i=0 ; i < 10 ; i++) - br = 20 br_taken = 18
@@ -108,7 +108,7 @@ loop3:
    addi x10, x10, 1
    bne x10, x11, loop3
    
-   addi x6, x6, 48 //will be replaced with stop counting
+   addi x6, x6, 48 //will be replaced with stop counting //dc
    
    //THIRD MESSAGE
    li x3, STDOUT
@@ -118,19 +118,19 @@ int_loop3:
    sb x5, 0(x3)
    addi x4, x4, 1
    bnez x5, int_loop3
-   addi x6, x6, 48 //will be replaced with read branch counter to x6
+   addi x6, x6, 48 //will be replaced with read branch counter to x6 //fa
    addi x7, x6, 0x30
    sb x7, 0(x3)
    li x7 , 0x20
    sb x7, 0(x3)
-   addi x6, x6, 48 //will be replaced with read branch taken counter to x6
+   addi x6, x6, 48 //will be replaced with read branch taken counter to x6 //10e
    addi x7, x6, 0x30
    sb x7, 0(x3)
    
    
-   addi x6, x6, 48 //will be replaced with reset counters
-   addi x6, x6, 48 //will be replaced with reset counters
-   addi x6, x6, 48 //will be replaced with start counting
+   addi x6, x6, 48 //will be replaced with reset counters //11a
+   addi x6, x6, 48 //will be replaced with reset counters //11e
+   addi x6, x6, 48 //will be replaced with start counting //122
    
    // FOURTH LOOPING
    li x10, 0x00
@@ -140,7 +140,7 @@ loop4:
    addi x10, x10, 1
    bne x10, x11, loop4
    
-   addi x6, x6, 48 //will be replaced with stop counting
+   addi x6, x6, 48 //will be replaced with stop counting //130
    
    
    // FOURTH MESSAGE
@@ -151,12 +151,12 @@ int_loop4:
    sb x5, 0(x3)
    addi x4, x4, 1
    bnez x5, int_loop4
-   addi x6, x6, 48 //will be replaced with read branch counter to x6
+   addi x6, x6, 48 //will be replaced with read branch counter to x6 //14e
    addi x7, x6, 0x30
    sb x7, 0(x3)
    li x7 , 0x20
    sb x7, 0(x3)
-   addi x6, x6, 48 //will be replaced with read branch taken counter to x6
+   addi x6, x6, 48 //will be replaced with read branch taken counter to x6 //162
    addi x7, x6, 0x30
    sb x7, 0(x3)
     
