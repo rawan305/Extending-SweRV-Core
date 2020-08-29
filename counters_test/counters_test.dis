@@ -1,0 +1,231 @@
+
+counters_test.exe:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	b0201073          	csrw	minstret,zero
+   4:	b8201073          	csrw	minstreth,zero
+   8:	ee0000b7          	lui	ra,0xee000
+   c:	30509073          	csrw	mtvec,ra
+  10:	5f5550b7          	lui	ra,0x5f555
+  14:	55508093          	addi	ra,ra,1365 # 5f555555 <STACK+0x5f53d4b5>
+  18:	7c009073          	csrw	0x7c0,ra
+  1c:	d05801b7          	lui	gp,0xd0580
+  20:	00010217          	auipc	tp,0x10
+  24:	fe020213          	addi	tp,tp,-32 # 10000 <hw_data>
+
+00000028 <loop>:
+  28:	00020283          	lb	t0,0(tp) # 0 <_start>
+  2c:	00518023          	sb	t0,0(gp) # d0580000 <STACK+0xd0567f60>
+  30:	0205                	addi	tp,tp,1
+  32:	fe029be3          	bnez	t0,28 <loop>
+  36:	03030313          	addi	t1,t1,48
+  3a:	03030313          	addi	t1,t1,48
+  3e:	03030313          	addi	t1,t1,48
+  42:	4501                	li	a0,0
+  44:	45a9                	li	a1,10
+
+00000046 <loop1>:
+  46:	0505                	addi	a0,a0,1
+  48:	feb51fe3          	bne	a0,a1,46 <loop1>
+  4c:	03030313          	addi	t1,t1,48
+  50:	d05801b7          	lui	gp,0xd0580
+  54:	00010217          	auipc	tp,0x10
+  58:	01620213          	addi	tp,tp,22 # 1006a <message>
+
+0000005c <int_loop1>:
+  5c:	00020283          	lb	t0,0(tp) # 0 <_start>
+  60:	00518023          	sb	t0,0(gp) # d0580000 <STACK+0xd0567f60>
+  64:	0205                	addi	tp,tp,1
+  66:	fe029be3          	bnez	t0,5c <int_loop1>
+  6a:	03030313          	addi	t1,t1,48
+  6e:	03030393          	addi	t2,t1,48
+  72:	00718023          	sb	t2,0(gp)
+  76:	02000393          	li	t2,32
+  7a:	00718023          	sb	t2,0(gp)
+  7e:	03030313          	addi	t1,t1,48
+  82:	03030393          	addi	t2,t1,48
+  86:	00718023          	sb	t2,0(gp)
+  8a:	4501                	li	a0,0
+  8c:	45a9                	li	a1,10
+
+0000008e <loop2>:
+  8e:	0505                	addi	a0,a0,1
+  90:	feb51fe3          	bne	a0,a1,8e <loop2>
+  94:	d05801b7          	lui	gp,0xd0580
+  98:	00010217          	auipc	tp,0x10
+  9c:	fd220213          	addi	tp,tp,-46 # 1006a <message>
+
+000000a0 <int_loop2>:
+  a0:	00020283          	lb	t0,0(tp) # 0 <_start>
+  a4:	00518023          	sb	t0,0(gp) # d0580000 <STACK+0xd0567f60>
+  a8:	0205                	addi	tp,tp,1
+  aa:	fe029be3          	bnez	t0,a0 <int_loop2>
+  ae:	03030313          	addi	t1,t1,48
+  b2:	03030393          	addi	t2,t1,48
+  b6:	00718023          	sb	t2,0(gp)
+  ba:	02000393          	li	t2,32
+  be:	00718023          	sb	t2,0(gp)
+  c2:	03030313          	addi	t1,t1,48
+  c6:	03030393          	addi	t2,t1,48
+  ca:	00718023          	sb	t2,0(gp)
+  ce:	03030313          	addi	t1,t1,48
+  d2:	4501                	li	a0,0
+  d4:	45a9                	li	a1,10
+
+000000d6 <loop3>:
+  d6:	0505                	addi	a0,a0,1
+  d8:	feb51fe3          	bne	a0,a1,d6 <loop3>
+  dc:	03030313          	addi	t1,t1,48
+  e0:	d05801b7          	lui	gp,0xd0580
+  e4:	00010217          	auipc	tp,0x10
+  e8:	f8620213          	addi	tp,tp,-122 # 1006a <message>
+
+000000ec <int_loop3>:
+  ec:	00020283          	lb	t0,0(tp) # 0 <_start>
+  f0:	00518023          	sb	t0,0(gp) # d0580000 <STACK+0xd0567f60>
+  f4:	0205                	addi	tp,tp,1
+  f6:	fe029be3          	bnez	t0,ec <int_loop3>
+  fa:	03030313          	addi	t1,t1,48
+  fe:	03030393          	addi	t2,t1,48
+ 102:	00718023          	sb	t2,0(gp)
+ 106:	02000393          	li	t2,32
+ 10a:	00718023          	sb	t2,0(gp)
+ 10e:	03030313          	addi	t1,t1,48
+ 112:	03030393          	addi	t2,t1,48
+ 116:	00718023          	sb	t2,0(gp)
+ 11a:	03030313          	addi	t1,t1,48
+ 11e:	03030313          	addi	t1,t1,48
+ 122:	03030313          	addi	t1,t1,48
+ 126:	4501                	li	a0,0
+ 128:	45a9                	li	a1,10
+
+0000012a <loop4>:
+ 12a:	0505                	addi	a0,a0,1
+ 12c:	feb51fe3          	bne	a0,a1,12a <loop4>
+ 130:	03030313          	addi	t1,t1,48
+ 134:	d05801b7          	lui	gp,0xd0580
+ 138:	00010217          	auipc	tp,0x10
+ 13c:	f3220213          	addi	tp,tp,-206 # 1006a <message>
+
+00000140 <int_loop4>:
+ 140:	00020283          	lb	t0,0(tp) # 0 <_start>
+ 144:	00518023          	sb	t0,0(gp) # d0580000 <STACK+0xd0567f60>
+ 148:	0205                	addi	tp,tp,1
+ 14a:	fe029be3          	bnez	t0,140 <int_loop4>
+ 14e:	03030313          	addi	t1,t1,48
+ 152:	03030393          	addi	t2,t1,48
+ 156:	00718023          	sb	t2,0(gp)
+ 15a:	02000393          	li	t2,32
+ 15e:	00718023          	sb	t2,0(gp)
+ 162:	03030313          	addi	t1,t1,48
+ 166:	03030393          	addi	t2,t1,48
+ 16a:	00718023          	sb	t2,0(gp)
+
+0000016e <_finish>:
+ 16e:	d05801b7          	lui	gp,0xd0580
+ 172:	0ff00293          	li	t0,255
+ 176:	00518023          	sb	t0,0(gp) # d0580000 <STACK+0xd0567f60>
+ 17a:	fe000ae3          	beqz	zero,16e <_finish>
+ 17e:	0001                	nop
+ 180:	0001                	nop
+ 182:	0001                	nop
+ 184:	0001                	nop
+ 186:	0001                	nop
+ 188:	0001                	nop
+ 18a:	0001                	nop
+ 18c:	0001                	nop
+ 18e:	0001                	nop
+ 190:	0001                	nop
+ 192:	0001                	nop
+ 194:	0001                	nop
+ 196:	0001                	nop
+ 198:	0001                	nop
+ 19a:	0001                	nop
+ 19c:	0001                	nop
+ 19e:	0001                	nop
+ 1a0:	0001                	nop
+ 1a2:	0001                	nop
+ 1a4:	0001                	nop
+ 1a6:	0001                	nop
+ 1a8:	0001                	nop
+ 1aa:	0001                	nop
+ 1ac:	0001                	nop
+ 1ae:	0001                	nop
+ 1b0:	0001                	nop
+ 1b2:	0001                	nop
+ 1b4:	0001                	nop
+ 1b6:	0001                	nop
+ 1b8:	0001                	nop
+ 1ba:	0001                	nop
+ 1bc:	0001                	nop
+ 1be:	0001                	nop
+ 1c0:	0001                	nop
+ 1c2:	0001                	nop
+ 1c4:	0001                	nop
+ 1c6:	0001                	nop
+ 1c8:	0001                	nop
+ 1ca:	0001                	nop
+ 1cc:	0001                	nop
+ 1ce:	0001                	nop
+ 1d0:	0001                	nop
+ 1d2:	0001                	nop
+ 1d4:	0001                	nop
+ 1d6:	0001                	nop
+ 1d8:	0001                	nop
+ 1da:	0001                	nop
+ 1dc:	0001                	nop
+ 1de:	0001                	nop
+ 1e0:	0001                	nop
+ 1e2:	0001                	nop
+ 1e4:	0001                	nop
+ 1e6:	0001                	nop
+ 1e8:	0001                	nop
+ 1ea:	0001                	nop
+ 1ec:	0001                	nop
+ 1ee:	0001                	nop
+ 1f0:	0001                	nop
+ 1f2:	0001                	nop
+ 1f4:	0001                	nop
+ 1f6:	0001                	nop
+ 1f8:	0001                	nop
+ 1fa:	0001                	nop
+ 1fc:	0001                	nop
+ 1fe:	0001                	nop
+ 200:	0001                	nop
+ 202:	0001                	nop
+ 204:	0001                	nop
+ 206:	0001                	nop
+ 208:	0001                	nop
+ 20a:	0001                	nop
+ 20c:	0001                	nop
+ 20e:	0001                	nop
+ 210:	0001                	nop
+ 212:	0001                	nop
+ 214:	0001                	nop
+ 216:	0001                	nop
+ 218:	0001                	nop
+ 21a:	0001                	nop
+ 21c:	0001                	nop
+ 21e:	0001                	nop
+ 220:	0001                	nop
+ 222:	0001                	nop
+ 224:	0001                	nop
+ 226:	0001                	nop
+ 228:	0001                	nop
+ 22a:	0001                	nop
+ 22c:	0001                	nop
+ 22e:	0001                	nop
+ 230:	0001                	nop
+ 232:	0001                	nop
+ 234:	0001                	nop
+ 236:	0001                	nop
+ 238:	0001                	nop
+ 23a:	0001                	nop
+ 23c:	0001                	nop
+ 23e:	0001                	nop
+ 240:	0001                	nop
+ 242:	0001                	nop
+ 244:	0001                	nop
