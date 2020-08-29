@@ -25,7 +25,7 @@ Disassembly of section .text:
   3a:	03030313          	addi	t1,t1,48
   3e:	03030313          	addi	t1,t1,48
   42:	4501                	li	a0,0
-  44:	45a9                	li	a1,10
+  44:	4589                	li	a1,2
 
 00000046 <loop1>:
   46:	0505                	addi	a0,a0,1
@@ -73,7 +73,7 @@ Disassembly of section .text:
   ca:	00718023          	sb	t2,0(gp)
   ce:	03030313          	addi	t1,t1,48
   d2:	4501                	li	a0,0
-  d4:	45a9                	li	a1,10
+  d4:	4589                	li	a1,2
 
 000000d6 <loop3>:
   d6:	0505                	addi	a0,a0,1
@@ -100,7 +100,7 @@ Disassembly of section .text:
  11e:	03030313          	addi	t1,t1,48
  122:	03030313          	addi	t1,t1,48
  126:	4501                	li	a0,0
- 128:	45a9                	li	a1,10
+ 128:	4589                	li	a1,2
 
 0000012a <loop4>:
  12a:	0505                	addi	a0,a0,1
