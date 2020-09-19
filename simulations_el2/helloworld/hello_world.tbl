@@ -1,0 +1,7 @@
+_end T 10e 
+_finish t 36 
+hw_data d 10000 
+.L0  t 20 
+loop t 28 
+STACK D 18070 
+_start T 0 

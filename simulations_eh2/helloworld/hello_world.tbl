@@ -1,0 +1,13 @@
+bypass_init1 t 4c 
+_end T 152 
+_finish t 7a 
+hw_data d 10000 
+hw_data1 d 1007c 
+.L0  t 42 
+.L0  t 50 
+.L11 t 5e 
+LOCK_SEMAPHORE a f004fffc 
+loop t 62 
+mhartstart a 7fc 
+STACK D 18100 
+_start T 0 
