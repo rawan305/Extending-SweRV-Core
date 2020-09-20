@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Sat Sep 12 23:14:55 2020
+# Process ID: 9088
+# Current directory: C:/Users/nimro/VivadoProjects/Cores-SweRV_fpga/hardware/project/script/eh1_zedboard/eh1_zedboard.runs/axi_intc_auto_cc_3_synth_1
+# Command line: vivado.exe -log axi_intc_auto_cc_3.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source axi_intc_auto_cc_3.tcl
+# Log file: C:/Users/nimro/VivadoProjects/Cores-SweRV_fpga/hardware/project/script/eh1_zedboard/eh1_zedboard.runs/axi_intc_auto_cc_3_synth_1/axi_intc_auto_cc_3.vds
+# Journal file: C:/Users/nimro/VivadoProjects/Cores-SweRV_fpga/hardware/project/script/eh1_zedboard/eh1_zedboard.runs/axi_intc_auto_cc_3_synth_1\vivado.jou
+#-----------------------------------------------------------
+source axi_intc_auto_cc_3.tcl -notrace
+create_project: Time (s): cpu = 00:00:09 ; elapsed = 00:00:16 . Memory (MB): peak = 438.145 ; gain = 120.129
+INFO: [IP_Flow 19-4838] Using cached IP synthesis design for IP axi_intc_auto_cc_3, cache-ID = 595a96cb69286bb2.
+INFO: [Common 17-206] Exiting Vivado at Sat Sep 12 23:16:22 2020...

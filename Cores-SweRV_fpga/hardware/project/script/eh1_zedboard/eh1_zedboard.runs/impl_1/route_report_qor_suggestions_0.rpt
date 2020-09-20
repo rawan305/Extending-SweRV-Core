@@ -1,0 +1,35 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sat Sep 19 00:23:24 2020
+| Host         : Nimi running 64-bit major release  (build 9200)
+| Command      : report_qor_suggestions -file route_report_qor_suggestions_0.rpt
+| Design       : swerv_eh1_reference_design
+| Device       : xc7z020
+| Design State : Routed
+-----------------------------------------------------------------------------------------
+
+Report QoR Suggestions
+
+Table of Contents
+-----------------
+1. QoR Suggestions Report Summary
+2. ML Strategies
+
+1. QoR Suggestions Report Summary
+---------------------------------
+
++------+----+--------+--------------+---------------+-----------+------------------------------------------------------------------------------------------+--------+
+| Name | Id | Status | Generated At | Applicable At | Automatic |                                        Description                                       | Source |
++------+----+--------+--------------+---------------+-----------+------------------------------------------------------------------------------------------+--------+
+* No QoR suggestions are provided when the fully routed design is assessed to easily meet timing.
+
+
+2. ML Strategies
+----------------
+
++---+----+---------+---------+
+| # | Id | Command | Options |
++---+----+---------+---------+
+
+

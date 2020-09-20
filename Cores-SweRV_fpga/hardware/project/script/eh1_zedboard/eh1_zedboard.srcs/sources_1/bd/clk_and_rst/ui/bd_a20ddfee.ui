@@ -1,0 +1,31 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-429,-51",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0.21  2019-05-29 bk=1.5064 VDI=41 GEI=36 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port clk_out1_0 -pg 1 -lvl 2 -x 360 -y 0 -defaultsOSRD
+preplace port mb_reset_0 -pg 1 -lvl 2 -x 360 -y 60 -defaultsOSRD
+preplace port reset -pg 1 -lvl 0 -x -110 -y 0 -defaultsOSRD
+preplace port sys_clock -pg 1 -lvl 0 -x -110 -y 20 -defaultsOSRD
+preplace portBus bus_struct_reset_0 -pg 1 -lvl 2 -x 360 -y 20 -defaultsOSRD
+preplace portBus interconnect_aresetn_0 -pg 1 -lvl 2 -x 360 -y 40 -defaultsOSRD
+preplace portBus peripheral_aresetn_0 -pg 1 -lvl 2 -x 360 -y 80 -defaultsOSRD
+preplace portBus peripheral_reset_0 -pg 1 -lvl 2 -x 360 -y 100 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -x 110 -y 30 -defaultsOSRD
+preplace inst proc_sys_reset_0 -pg 1 -lvl 1 -x 110 -y 180 -defaultsOSRD
+preplace netloc clk_wiz_0_clk_out1 1 0 2 -70 280 290
+preplace netloc clk_wiz_0_locked 1 0 2 -60 290 280
+preplace netloc proc_sys_reset_0_bus_struct_reset 1 1 1 300 20n
+preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 1 320 40n
+preplace netloc proc_sys_reset_0_mb_reset 1 1 1 310 60n
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 1 340 80n
+preplace netloc proc_sys_reset_0_peripheral_reset 1 1 1 330 100n
+preplace netloc reset_1 1 0 1 -80 0n
+preplace netloc sys_clock_1 1 0 1 -90 20n
+levelinfo -pg 1 -110 110 360
+pagesize -pg 1 -db -bbox -sgen -230 -40 590 300
+"
+}
+

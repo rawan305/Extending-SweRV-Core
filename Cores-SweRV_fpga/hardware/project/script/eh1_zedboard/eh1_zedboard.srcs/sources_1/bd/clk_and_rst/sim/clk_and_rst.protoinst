@@ -1,0 +1,9 @@
+{
+	"version": "1.0",
+	"modules": {
+		"clk_and_rst": {
+			"proto_instances": {
+			}
+		}
+	}
+}
