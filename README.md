@@ -8,7 +8,7 @@ We will focus mainly on the SweRV EH1 dsign, but it can be easily with some chan
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
-### Instructions to run
+### Instructions
 * Setup RV_ROOT to point to the path of the SweRV Core design you chose in your local filesystem
 ```export RV_ROOT=/path/to/swerv```
 * go to folder of simulations where you want log files will be written.
@@ -31,7 +31,7 @@ TEST_DIR    -  alternative to test source directory testbench/asm
                for runs on custom configurations.
 CONF_PARAMS -  configuration parameter for swerv.config : ex: 'CONF_PARAMS=-unset=dccm_enable' to build with no DCCM
 ```
-Notice: you can add a Makefile to your source file. Read $RV_ROOT/tools/Makefile for more information.
+* Notice: you can add a Makefile to your source file. Read $RV_ROOT/tools/Makefile for more information.
 
 
 
