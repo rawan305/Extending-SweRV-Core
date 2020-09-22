@@ -42,7 +42,7 @@ CONF_PARAMS -  configuration parameter for swerv.config : ex: 'CONF_PARAMS=-unse
 
 An example of such design is in ```Cores-SweRV_new_instruction``` folder where we implemnted a simple additional instruction which add 3 to a source register and write the result to a destination register.
 
-###General Mode Of Work:
+### General Mode Of Work:
 * Define your instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
 * Define the indicators you would like the decoder will set for your case (you can add new indicators in the ```design/include/swerv_types.sv``` file.
 * Change the ```design/dec/decode``` to your new instructions.
