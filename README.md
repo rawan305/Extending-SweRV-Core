@@ -47,6 +47,7 @@ An example of such design is in ```Cores-SweRV_new_instruction``` folder where w
 * Define the indicators you would like the decoder will set for your case (you can add new indicators in the ```design/include/swerv_types.sv``` file.
 * Change the ```design/dec/decode``` to your new instructions.
 * Calculate new equaitions:
+
   to generate all the equations from "decode" except legal equation:
 ```
 ./coredecode -in decode > coredecode.e
