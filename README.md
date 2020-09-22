@@ -53,7 +53,7 @@ An example of such design is in ```Cores-SweRV_new_instruction``` folder where w
 ./coredecode -in decode > coredecode.e
 espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
 ```
-  to generate the legal (32b instruction is legal) equation:
+   to generate the legal (32b instruction is legal) equation:
 ```
 ./coredecode -in decode -legal > legal.e
 espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
