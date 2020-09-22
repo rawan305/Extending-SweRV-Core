@@ -34,6 +34,32 @@ CONF_PARAMS -  configuration parameter for swerv.config : ex: 'CONF_PARAMS=-unse
 * Notice: you can add a Makefile to your source file. Read $RV_ROOT/tools/Makefile for more information.
 
 
+## Designing new instructions support 
+### Dependencies
+* Verilator (4.030 or later) must be installed on the system if running with verilator.
+* RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
+* espresso logic minimizer
+
+An example of such design is in ```Cores-SweRV_new_instruction``` folder where we implemnted a simple additional instruction which add 3 to a source register and write the result to a destination register.
+
+###General Mode Of Work:
+* Define your instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
+* Define the indicators you would like the decoder will set for your case (you can add new indicators in the ```design/include/swerv_types.sv``` file.
+* Change the ```design/dec/decode``` to your new instructions.
+* Calculate new equaitions:
+  - to generate all the equations from "decode" except legal equation:
+```
+./coredecode -in decode > coredecode.e
+espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
+```
+  -to generate the legal (32b instruction is legal) equation:
+```
+./coredecode -in decode -legal > legal.e
+espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
+```
+* Pass the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc.)
+* Change Execution and Write Back stages according to the required result.
+
 
 
 ## useful linkes:
