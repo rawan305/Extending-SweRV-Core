@@ -48,7 +48,7 @@ An example of such design is in ```Cores-SweRV_new_instruction``` folder where w
 * Change the ```design/dec/decode``` to your new instructions.
 * Calculate new equaitions:
 
-  to generate all the equations from "decode" except legal equation:
+ to generate all the equations from "decode" except legal equation:
 ```
 ./coredecode -in decode > coredecode.e
 espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
