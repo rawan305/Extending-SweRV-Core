@@ -79,7 +79,7 @@ In addition, we will add support for a number of new instructions (in R-type for
 6.	Read Branch-Taken Counter –  will read the value of the branch-taken counter to destination register (rd).
 
 ```Cores-SweRV_Counters\Cores-SweRV``` is the new design.
-In the folde ```Cores-SweRV_Counters``` you can also find 3 tests we simulated on the new design.
+In the folder ```Cores-SweRV_Counters``` you can also find 3 tests we simulated on the new design.
 
 
 
