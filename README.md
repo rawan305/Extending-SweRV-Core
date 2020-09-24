@@ -83,9 +83,3 @@ In the folder ```Cores-SweRV_Counters``` you can also find 3 tests we simulated 
 
 
 
-
-
-## useful linkes:
-1. https://content.riscv.org/wp-content/uploads/2019/12/12.11-14.20a3-Bandic-WD_SweRV_Cores_Roadmap_v4SCR.pdf
-2. https://rv8.io/bench.html
-3. https://en.wikipedia.org/wiki/Benchmark_(computing)
