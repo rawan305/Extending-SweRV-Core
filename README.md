@@ -34,7 +34,7 @@ CONF_PARAMS -  configuration parameter for swerv.config : ex: 'CONF_PARAMS=-unse
 * Notice: you can add a Makefile to your source file. Read $RV_ROOT/tools/Makefile for more information.
 
 
-## Support and Designing new instructions 
+## Supporting and Designing new instructions 
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
