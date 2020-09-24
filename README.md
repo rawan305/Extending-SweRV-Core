@@ -62,6 +62,28 @@ espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 * Change Execution and Write Back stages according to the required result.
 
 
+## Supporting and Designing new hardware with SweRV Core: Branch & Branch Taken counters
+### Dependencies
+* Verilator (4.030 or later) must be installed on the system if running with verilator.
+* RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
+* espresso logic minimizer
+
+### General Information
+In this experiment we wanted to design and implement branch counter and branch-taken counter. The branch counter will count the number of conditional branches in the running code, and the branch-taken counter will count the number of conditional branches which their result was taken in the running code.
+In addition, we will add support for a number of new instructions (in R-type format):
+1.	Start Counting – will enable the counting for each instruction which follows it.
+2.	Stop Counting – will disable the counting for each instruction which follows it.
+3.	Reset Branch Counter – will reset the branch counter to zero.
+4.	Reset Branch-Taken Counter – will reset the branch-taken counter to zero.
+5.	Read Branch Counter – will read the value of the branch counter to destination register (rd).
+6.	Read Branch-Taken Counter –  will read the value of the branch-taken counter to destination register (rd).
+
+```Cores-SweRV_Counters\Cores-SweRV``` is the new design.
+In the folde ```Cores-SweRV_Counters``` you can also find 3 tests we simulated on the new design.
+
+
+
+
 
 ## useful linkes:
 1. https://content.riscv.org/wp-content/uploads/2019/12/12.11-14.20a3-Bandic-WD_SweRV_Cores_Roadmap_v4SCR.pdf
