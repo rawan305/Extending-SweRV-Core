@@ -62,7 +62,7 @@ espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 * Change Execution and Write Back stages according to the required result.
 
 
-## Supporting and Designing new hardware with SweRV Core: Branch & Branch Taken counters
+## Supporting and Designing new hardware: Branch & Branch Taken counters
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
