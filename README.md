@@ -34,7 +34,7 @@ CONF_PARAMS -  configuration parameter for swerv.config : ex: 'CONF_PARAMS=-unse
 * Notice: you can add a Makefile to your source file. Read $RV_ROOT/tools/Makefile for more information.
 
 
-## Supporting and Designing new instructions 
+## Designing new RISC-V instructions with SweRV Core 
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
@@ -62,7 +62,7 @@ espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 * Change Execution and Write Back stages according to the required result.
 
 
-## Supporting and Designing new hardware: Branch & Branch Taken counters
+## Branch & Branch Taken counters in SweRV Core
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
