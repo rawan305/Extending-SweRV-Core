@@ -114,19 +114,21 @@ There are two applications:
   ii. ```sum```: compute sum of the numbers from 3 to 9.
 NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
 NOTE: The ```common``` folder has printf, uart device functions and memory map information.
-10. Once we generate an application executable, we need to configure openocd+GDB and UART device.
-    a. OpenOCD+GDB
-      i. Run openocd: ```swerv_openocd.cfg``` file inside ```bsp``` folder
-      ```$ sudo openocd -f swerv_openocd.cfg```
-      ii.  Use another terminal and run GDB. Then connect to openocd, load and debug.
-```
-    $riscv32-unknown-elf-gdb hello.elf < 
-	....		 
-	(gdb) target remote localhost:3333
-	....
-	(gdb) load
-    ....
-```
-    b. UART – create serial connection with the uart interface
+10. Once we generate an application executable, we need to configure openocd+GDB and UART device.  
+    a. OpenOCD+GDB   
+	    1. Run openocd: `swerv_openocd.cfg` file inside `bsp` folder  
+	    `$ sudo openocd -f swerv_openocd.cfg` (sudo may be required to access the Olimex device directly)  
+  	    2. Use another terminal and run GDB. Then connect to openocd, 
+		   load and debug.
+		   
+            $riscv32-unknown-elf-gdb hello.elf < 
+			....		 
+			(gdb) target remote localhost:3333
+			....
+			(gdb) load
+		    ....
+		
+
+	b. UART: create serial connection with the uart interface 
 11.	If everything works fine, you can see a message on the UART terminal.
     
