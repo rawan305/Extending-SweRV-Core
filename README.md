@@ -115,14 +115,10 @@ Vivado will open and start building your project files. The GUI will stay open t
 
 9. Next, we need an application to run on this system. Go to ```software/apps``` folder and build the application using ```make``` command. We provide a makefile to generate the executable (e.g., hello.elf).
 There are two applications:
-
- i. ```hello```: print ```Hello world from SweRV on FPGA!```
-
- ii. ```sum```: compute sum of the numbers from 3 to 9.
-
- NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
-
- NOTE: The ```common``` folder has printf, uart device functions and memory map information.
+	i. ```hello```: print ```Hello world from SweRV on FPGA!```
+	ii. ```sum```: compute sum of the numbers from 3 to 9.
+	NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
+	NOTE: The ```common``` folder has printf, uart device functions and memory map information.
 
 10. Once we generate an application executable, we need to configure openocd+GDB and UART device.  
     a. OpenOCD+GDB   
