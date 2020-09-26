@@ -81,5 +81,52 @@ In addition, we will add support for a number of new instructions (in R-type for
 ```Cores-SweRV_Counters\Cores-SweRV``` is the new design.
 In the folder ```Cores-SweRV_Counters``` you can also find 3 tests we simulated on the new design.
 
+## FPGA implementation
+### General
+We will present how to create Zedboarf FPGA implementation for the SweRV Core EH1.
+The implementation is almost the same as the one created by Chipa-Alliance and WD for Nexys4: https://github.com/chipsalliance/Cores-SweRV_fpga
 
+## Instructions:
+1. Set the SWERV_EH1_FPGA_PATH environment variable to repository path.
+```
+ $ cd /path/to/Cores-SweRV_fpga 
+ $ export SWERV_EH1_FPGA_PATH=`pwd`
+```
+2. Copy ```Cores-SweRV``` folder to the hardware directory (path:```${SWERV_EH1_FPGA_PATH}/hardware```), rename it ```swerv_eh1``` and set RV_ROOT to point ```swerv_eh1``` folder:
+```$ export RV_ROOT=$SWERV_EH1_FPGA_PATH/hardware/swerv_eh1```
+3. Configure ```swerv_eh1``` core for the Nexys4 DDR board. We use default settings with ```reset_vec=0x0```.
+Go to configs folder (path: ```$RV_ROOT/configs```) and run the ```swerv.config``` script as below:
+```$ ./swerv.config -set reset_vec=0x0 -unset=icache_enable```
+4. Create FPGA project using the vivado tcl project script file ```zedboard.tcl``` inside ```project/script``` folder.
+```
+ $ cd $SWERV_EH1_FPGA_PATH/hardware/project/script
+ $ vivado -source nexys4ddr_refprj.tcl
+```
+Vivado will open and start building your project files. The GUI will stay open to in the new project environment.
+5. Now that you have the project directory, you synthesize and implement your design to obtain the FPGA .bit file, using the same flow you would use for any other Xilinx design: ```Menu >> Flow >> Run``` Implementation
+6. Now we are ready to program the Zedboard. Connect the board to the host using micro USB cable to download the bit file.
+7.	Connect the JTAG HS2 and PMOD UART-USB connectors with the Zedboard to download and debug software applications.
+8.	Switch on the board and download the bit file using the Vivado Hardware Manager.
+9. Next, we need an application to run on this system. Go to ```software/apps``` folder and build the application using ```make``` command. We provide a makefile to generate the executable (e.g., hello.elf).
+There are two applications:
 
+  i. ```hello```: print ```Hello world from SweRV on FPGA!```
+  ii. ```sum```: compute sum of the numbers from 3 to 9.
+NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
+NOTE: The ```common``` folder has printf, uart device functions and memory map information.
+10. Once we generate an application executable, we need to configure openocd+GDB and UART device.
+    a. OpenOCD+GDB
+      i. Run openocd: ```swerv_openocd.cfg``` file inside ```bsp``` folder
+      ```$ sudo openocd -f swerv_openocd.cfg```
+      ii.  Use another terminal and run GDB. Then connect to openocd, load and debug.
+```
+    $riscv32-unknown-elf-gdb hello.elf < 
+	....		 
+	(gdb) target remote localhost:3333
+	....
+	(gdb) load
+    ....
+```
+    b. UART – create serial connection with the uart interface
+11.	If everything works fine, you can see a message on the UART terminal.
+    
