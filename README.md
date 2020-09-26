@@ -102,11 +102,17 @@ Go to configs folder (path: ```$RV_ROOT/configs```) and run the ```swerv.config`
  $ cd $SWERV_EH1_FPGA_PATH/hardware/project/script
  $ vivado -source nexys4ddr_refprj.tcl
 ```
+
 Vivado will open and start building your project files. The GUI will stay open to in the new project environment.
+
 5. Now that you have the project directory, you synthesize and implement your design to obtain the FPGA .bit file, using the same flow you would use for any other Xilinx design: ```Menu >> Flow >> Run``` Implementation
+
 6. Now we are ready to program the Zedboard. Connect the board to the host using micro USB cable to download the bit file.
+
 7.	Connect the JTAG HS2 and PMOD UART-USB connectors with the Zedboard to download and debug software applications.
+
 8.	Switch on the board and download the bit file using the Vivado Hardware Manager.
+
 9. Next, we need an application to run on this system. Go to ```software/apps``` folder and build the application using ```make``` command. We provide a makefile to generate the executable (e.g., hello.elf).
 There are two applications:
 
@@ -114,6 +120,7 @@ There are two applications:
   ii. ```sum```: compute sum of the numbers from 3 to 9.
 NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
 NOTE: The ```common``` folder has printf, uart device functions and memory map information.
+
 10. Once we generate an application executable, we need to configure openocd+GDB and UART device.  
     a. OpenOCD+GDB   
 	    1. Run openocd: `swerv_openocd.cfg` file inside `bsp` folder  
@@ -130,5 +137,6 @@ NOTE: The ```common``` folder has printf, uart device functions and memory map i
 		
 
 	b. UART: create serial connection with the uart interface 
+
 11.	If everything works fine, you can see a message on the UART terminal.
     
