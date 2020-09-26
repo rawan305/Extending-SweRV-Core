@@ -117,8 +117,11 @@ Vivado will open and start building your project files. The GUI will stay open t
 There are two applications:
 
   i. ```hello```: print ```Hello world from SweRV on FPGA!```
+  
   ii. ```sum```: compute sum of the numbers from 3 to 9.
+
 NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
+
 NOTE: The ```common``` folder has printf, uart device functions and memory map information.
 
 10. Once we generate an application executable, we need to configure openocd+GDB and UART device.  
