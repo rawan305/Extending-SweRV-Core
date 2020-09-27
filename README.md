@@ -81,7 +81,10 @@ In addition, we will add support for a number of new instructions (in R-type for
 To install a RISC-V toolchain with the new instructions see: https://github.com/nbarazani/riscv-gnu-toolchain
 
 ```Cores-SweRV_Counters\Cores-SweRV``` is the new design.
-In the folder ```Cores-SweRV_Counters``` you can also find 3 tests we simulated on the new design.
+In the folder ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` you can also find 3 tests we simulated on the new design:
+* counters_test.s
+* counters_test2.s
+* counters_test3.s
 
 ## FPGA implementation
 ### General
