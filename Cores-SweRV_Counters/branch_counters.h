@@ -27,7 +27,8 @@ int readBranchTakenCounter(){
 	return x;
 }
 
-#define BRANCH_COUNTERS_SART ({\
+#define BRANCH_COUNTERS_START ({\
+	stopBranchCounters();\
 	resetBranchCounter();\
 	resetBranchTakenCounter();\
 	startBranchCounters();\
