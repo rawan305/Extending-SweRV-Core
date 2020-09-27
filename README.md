@@ -1,6 +1,6 @@
 # SweRV Cores Experiments
 
-This repository is a part of final BSC project at the VLSI lab in the technion.
+This repository is a part of final BSc project at the VLSI lab in the technion.
 In this project we will explore some methods and tools when using the open source SweRV Cores.
 We will focus mainly on the SweRV EH1 dsign, but it can be easily with some changes to the other designs.
 
