@@ -17,13 +17,13 @@ void stopBranchCounters(){
 
 int readBranchCounter(){
 	int x;
-	__asm__ __volatile__ ("bcntrd x6" : "=r"(x));
+	__asm("bcntrd %0" : "=r"(x));
 	return x;
 }
 
 int readBranchTakenCounter(){
 	int x;
-	__asm__ __volatile__ ("btcntrd x6" : "=r"(x));
+	__asm("btcntrd %0" : "=r"(x));
 	return x;
 }
 
