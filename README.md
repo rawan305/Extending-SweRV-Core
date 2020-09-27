@@ -127,6 +127,7 @@ There are two applications:
 	ii. ```sum```: compute sum of the numbers from 3 to 9.
 	NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
 	NOTE: The ```common``` folder has printf, uart device functions and memory map information.
+	NOTE: Here you need to use the relevant toolchain for the design you chose. If the design is the one with branch counters, then you probably need the toolchain which supports the new instructions as explained in previous chapter.
 
 10. Once we generate an application executable, we need to configure openocd+GDB and UART device.  
     a. OpenOCD+GDB   
