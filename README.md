@@ -71,12 +71,14 @@ espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 ### General Information
 In this experiment we wanted to design and implement branch counter and branch-taken counter. The branch counter will count the number of conditional branches in the running code, and the branch-taken counter will count the number of conditional branches which their result was taken in the running code.
 In addition, we will add support for a number of new instructions (in R-type format):
-1.	Start Counting – will enable the counting for each instruction which follows it.
-2.	Stop Counting – will disable the counting for each instruction which follows it.
-3.	Reset Branch Counter – will reset the branch counter to zero.
-4.	Reset Branch-Taken Counter – will reset the branch-taken counter to zero.
-5.	Read Branch Counter – will read the value of the branch counter to destination register (rd).
-6.	Read Branch-Taken Counter –  will read the value of the branch-taken counter to destination register (rd).
+1.	bcntson  - Start Counting – will enable the counting for each instruction which follows it.
+2.	bcntsoff - Stop Counting – will disable the counting for each instruction which follows it.
+3.	bcntrst  - Reset Branch Counter – will reset the branch counter to zero.
+4.	btcntrst - Reset Branch-Taken Counter – will reset the branch-taken counter to zero.
+5.	bcntrd   - Read Branch Counter – will read the value of the branch counter to destination register (rd).
+6.	btcntrd  - Read Branch-Taken Counter –  will read the value of the branch-taken counter to destination register (rd).
+
+To install a RISC-V toolchain with the new instructions see: https://github.com/nbarazani/riscv-gnu-toolchain
 
 ```Cores-SweRV_Counters\Cores-SweRV``` is the new design.
 In the folder ```Cores-SweRV_Counters``` you can also find 3 tests we simulated on the new design.
