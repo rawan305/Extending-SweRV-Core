@@ -108,7 +108,7 @@ Go to configs folder (path: ```$RV_ROOT/configs```) and run the ```swerv.config`
 4. Create FPGA project using the vivado tcl project script file ```zedboard.tcl``` inside ```project/script``` folder.
 ```
  $ cd $SWERV_EH1_FPGA_PATH/hardware/project/script
- $ vivado -source nexys4ddr_refprj.tcl
+ $ vivado -source zedboard.tcl
 ```
 
 Vivado will open and start building your project files. The GUI will stay open to in the new project environment.
