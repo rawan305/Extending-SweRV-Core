@@ -135,7 +135,7 @@ There are two applications:
 10. Once we generate an application executable, we need to configure openocd+GDB and UART device.  
     a. OpenOCD+GDB   
 	    1. Run openocd: `swerv_openocd.cfg` file inside `bsp` folder  
-	    `$ sudo openocd -f swerv_openocd.cfg` (sudo may be required to access the Olimex device directly)  
+	    `$ sudo openocd -f swerv_openocd.cfg`   
   	    2. Use another terminal and run GDB. Then connect to openocd, 
 		   load and debug.
 		   
