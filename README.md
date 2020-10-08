@@ -91,8 +91,8 @@ In the folder ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` you can also 
 
 ## FPGA implementation
 ### General
-We will present how to create Zedboarf FPGA implementation for the SweRV Core EH1.
-The implementation is almost the same as the one created by Chipa-Alliance and WD for Nexys4: https://github.com/chipsalliance/Cores-SweRV_fpga
+We will present how to create Zedboard FPGA implementation for the SweRV Core EH1.
+The implementation is almost the same as the one created by Chips-Alliance and WD for Nexys4: https://github.com/chipsalliance/Cores-SweRV_fpga
 
 ## Instructions:
 1. Set the SWERV_EH1_FPGA_PATH environment variable to repository path.
