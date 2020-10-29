@@ -186,8 +186,8 @@ For example, we used:
 		> resume
 		```
 9. Running application using bootrom_file:  
-You might prefer using different booting method explained on the original SweRVolf repository by Chips-Alliance. For example, the application can run on booting.  
-After stage 6 just type:  
+You might prefer using different booting method explained on the original SweRVolf repository by Chips-Alliance.  
+For example, after stage 6 just type:  
 ```fusesoc run --target=nexys_a7 swervolf --bootrom_file=$SWERVOLF_ROOT/sw/ program_main_file.vh```  
 If the board is connected, after compilation is finished the program will be loaded to memory and boot from there.
 
