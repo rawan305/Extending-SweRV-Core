@@ -185,7 +185,7 @@ For example, we used:
 		> reg pc 0
 		> resume
 		```
-9. Running application using bootrom_file:
+9. Running application using bootrom_file:  
 You might prefer using different booting method explained on the original SweRVolf repository by Chips-Alliance. For example, the application can run on booting.  
 After stage 6 just type:  
 ```fusesoc run --target=nexys_a7 swervolf --bootrom_file=$SWERVOLF_ROOT/sw/ program_main_file.vh```  
