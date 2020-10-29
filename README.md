@@ -155,30 +155,30 @@ Our customized version (displaying also Branch-Counters) can be found on:
 2. ```export WORKSPACE=$(pwd)```
 3. ```export SWERVOLF_ROOT=$WORKSPACE/fusesoc_libraries/swervolf```
 4. ```fusesoc library add fusesoc-cores https://github.com/fusesoc/fusesoc-cores```
-5. ```fusesoc library add swervolf https://github.com/chipsalliance/Cores-SweRVolf```
+5. ```fusesoc library add swervolf https://github.com/chipsalliance/Cores-SweRVolf```  
 
-For your modified SweRVolf version:
-```fusesoc library add swervolf https://github.com/<your_name>/Cores-SweRVolf```
-For example, we used:
-```fusesoc library add swervolf https://github.com/nbarazani/Cores-SweRVolf```
+For your modified SweRVolf version:  
+```fusesoc library add swervolf https://github.com/<your_name>/Cores-SweRVolf```  
+For example, we used:  
+```fusesoc library add swervolf https://github.com/nbarazani/Cores-SweRVolf```  
 
 6. ```fusesoc run --target=nexys_a7 swervolf```
 7. Compile your application:
-	a. ```cp /path/to/source_files $SWERVOLF_ROOT/sw/```
-	b. ```cd $SWERVOLF_ROOT/sw```
-	c. ```make program_main_file.elf``` (for running from OpenOCD)
-	d. ```make program_main_file.vh``` (for booting from RAM)
-	e. ```cd $WORKSPACE``` 
+	1. ```cp /path/to/source_files $SWERVOLF_ROOT/sw/```
+	2. ```cd $SWERVOLF_ROOT/sw```
+	3. ```make program_main_file.elf``` (for running from OpenOCD)
+	4. ```make program_main_file.vh``` (for booting from RAM)
+	5. ```cd $WORKSPACE``` 
 8. Running application using OpenOCD:
-	a. Open first shell to download the design to FPGA:
-		i. ```Openocd -c "set BITFILE /path/to/bitfile" -f $SWERVOLF_ROOT/data/swervolf_nexys_program.cfg```
-		ii. /path/to/bitfile (usually) = $WORKSPACE/build/swervolf_0.7/nexys_a7-vivado/swervolf_0.7.bit
-	b. On the same shell for debug run:
-		i. ```openocd -f $SWERVOLF_ROOT/data/swervolf_nexys_debug.cfg```
-	c. Open Second shell to see UART printing and run:
-		i. ```sudo minicom -D /dev/ttyUSB?```
-		ii. /dev/ttyUSB? = for us it was /dev/ttyUSB1 but it might be different. Find the serial UART connection port.
-	d. Open third shell and run:
+	1. Open first shell to download the design to FPGA:
+		1. ```Openocd -c "set BITFILE /path/to/bitfile" -f $SWERVOLF_ROOT/data/swervolf_nexys_program.cfg```
+		2. /path/to/bitfile (usually) = $WORKSPACE/build/swervolf_0.7/nexys_a7-vivado/swervolf_0.7.bit
+	2. On the same shell for debug run:
+		1. ```openocd -f $SWERVOLF_ROOT/data/swervolf_nexys_debug.cfg```
+	3. Open Second shell to see UART printing and run:
+		1. ```sudo minicom -D /dev/ttyUSB?```
+		2. /dev/ttyUSB? = for us it was /dev/ttyUSB1 but it might be different. Find the serial UART connection port.
+	4. Open third shell and run:
 		```
 		telnet localhost 4444
 		> load_image /path/to/file.elf
