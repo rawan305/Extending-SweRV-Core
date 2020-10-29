@@ -89,65 +89,107 @@ In the folder ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` you can also 
 
 ```Cores-SweRV_Counters\branch_counters.h``` includes C wrapper functions for each one of the new instructions and 2 Macro that can be used at the beginning and the end of any simulation main code to reset counters and print their results (assuming a printf implementation exists).
 
+In addition there is a version of SweRV EH1 with Branch-Counters which also output their values on: https://github.com/nbarazani/Cores-SweRV
+
+
 ## FPGA implementation
 ### General
 We will present how to create Zedboard FPGA implementation for the SweRV Core EH1.
-The implementation is almost the same as the one created by Chips-Alliance and WD for Nexys4: https://github.com/chipsalliance/Cores-SweRV_fpga
+The implementation is based on the one created by Chips-Alliance and WD for Nexys-A7: https://github.com/chipsalliance/Cores-SweRVolf 
 
-## Instructions:
-1. Set the SWERV_EH1_FPGA_PATH environment variable to repository path.
+Our customized version (displaying also Branch-Counters) can be found on:
+- https://github.com/nbarazani/Cores-SweRVolf
+- https://github.com/nbarazani/Cores-SweRV
+
+### Dependencies and Requirements
+* Digilent’s Nexys A7 board
+* Vivado
+* Verilator
+* python3
+* fusesoc (pip install fusesoc)
+* RISC V Toolchain (with new instructions or without)
+* RISC V OpenOCD
+
+### How to use a modified SweRV core version
+1. Fork https://github.com/chipsalliance/Cores-SweRVolf
+2. Fork https://github.com/chipsalliance/Cores-SweRV
+3. Modify Cores-SweRV repository to your own modified SweRV Core.
+4. Go to Cores-SweRVolf:
+	a. edit cores/swerv.core:
+		i. replace the name at the top:
+			```name : <your_name>:cores:SweRV_EH1:1.7```
+		ii. replace the provider details at the bottom:
 ```
- $ cd /path/to/Cores-SweRV_fpga 
- $ export SWERV_EH1_FPGA_PATH=`pwd`
+			name    : github
+			user    : <your github user>
+			repo    : Cores-SweRV
+			version : <the commit version you’d like to use>
+			patches : [cast_to_enum.patch]
 ```
-2. Copy ```Cores-SweRV``` folder to the hardware directory (path:```${SWERV_EH1_FPGA_PATH}/hardware```), rename it ```swerv_eh1``` and set RV_ROOT to point ```swerv_eh1``` folder:
-```$ export RV_ROOT=$SWERV_EH1_FPGA_PATH/hardware/swerv_eh1```
-3. Configure ```swerv_eh1``` core for the Nexys4 DDR board. We use default settings with ```reset_vec=0x0```.
-Go to configs folder (path: ```$RV_ROOT/configs```) and run the ```swerv.config``` script as below:
-```$ ./swerv.config -set reset_vec=0x0 -unset=icache_enable```
-4. Create FPGA project using the vivado tcl project script file ```zedboard.tcl``` inside ```project/script``` folder.
+	b. edit swervolf.core:
+		i. replace dependency:
 ```
- $ cd $SWERV_EH1_FPGA_PATH/hardware/project/script
- $ vivado -source zedboard.tcl
+			filesets:
+			  core:
+   			    files:
+      				- rtl/dpram64.v
+      				- rtl/axi2wb.v
+      				- rtl/wb_mem_wrapper.v
+      				- rtl/swervolf_syscon.v
+      				- rtl/swerv_wrapper.sv
+      				- rtl/swervolf_core.v
+    				file_type : systemVerilogSource
+    				depend :
+      					- fusesoc:utils:generators
+      					- uart16550
+      					- ">=pulp-platform.org::axi:0.23.0-r1"
+     					- ">=<your name>:cores:SweRV_EH1:1.5"
+      					- simple_spi
+    					- wb_intercon
 ```
+	c. Edit any RTL or data file you’d like to change. For example we changed rtl/swervolf_nexys.v, rtl/swervolf_core.v, rtl/swerv_wrapper.sv, data/swervolf_nexys.xdc in order to display the counters on the 7-Segment digits display.
 
-Vivado will open and start building your project files. The GUI will stay open to in the new project environment.
 
-5. Now that you have the project directory, you synthesize and implement your design to obtain the FPGA .bit file, using the same flow you would use for any other Xilinx design: ```Menu >> Flow >> Run``` Implementation
+### How to run on Nexys A7 
+1. Create empty folder, e.g. named swervolf.
+2. ```export WORKSPACE=$(pwd)```
+3. ```export SWERVOLF_ROOT=$WORKSPACE/fusesoc_libraries/swervolf```
+4. ```fusesoc library add fusesoc-cores https://github.com/fusesoc/fusesoc-cores```
+5. ```fusesoc library add swervolf https://github.com/chipsalliance/Cores-SweRVolf```
 
-6. Now we are ready to program the Zedboard. Connect the board to the host using micro USB cable to download the bit file.
+For your modified SweRVolf version:
+```fusesoc library add swervolf https://github.com/<your_name>/Cores-SweRVolf```
+For example, we used:
+```fusesoc library add swervolf https://github.com/nbarazani/Cores-SweRVolf```
 
-7.	Connect the JTAG HS2 and PMOD UART-USB connectors with the Zedboard to download and debug software applications.
+6. ```fusesoc run --target=nexys_a7 swervolf```
+7. Compile your application:
+	a. ```cp /path/to/source_files $SWERVOLF_ROOT/sw/```
+	b. ```cd $SWERVOLF_ROOT/sw```
+	c. ```make program_main_file.elf``` (for running from OpenOCD)
+	d. ```make program_main_file.vh``` (for booting from RAM)
+	e. ```cd $WORKSPACE``` 
+8. Running application using OpenOCD:
+	a. Open first shell to download the design to FPGA:
+		i. ```Openocd -c "set BITFILE /path/to/bitfile" -f $SWERVOLF_ROOT/data/swervolf_nexys_program.cfg```
+		ii. /path/to/bitfile (usually) = $WORKSPACE/build/swervolf_0.7/nexys_a7-vivado/swervolf_0.7.bit
+	b. On the same shell for debug run:
+		i. ```openocd -f $SWERVOLF_ROOT/data/swervolf_nexys_debug.cfg```
+	c. Open Second shell to see UART printing and run:
+		i. ```sudo minicom -D /dev/ttyUSB?```
+		ii. /dev/ttyUSB? = for us it was /dev/ttyUSB1 but it might be different. Find the serial UART connection port.
+	d. Open third shell and run:
+		```
+		telnet localhost 4444
+		> load_image /path/to/file.elf
+		> reg pc 0
+		> resume
+		```
+9. Running application using bootrom_file:
+You might prefer using different booting method explained on the original SweRVolf repository by Chips-Alliance. For example, the application can run on booting.
+After stage 6 just type:
+```fusesoc run --target=nexys_a7 swervolf --bootrom_file=$SWERVOLF_ROOT/sw/ program_main_file.vh```
+If the board is connected, after compilation is finished the program will be loaded to memory and boot from there.
 
-8.	Switch on the board and download the bit file using the Vivado Hardware Manager.
 
-9. Next, we need an application to run on this system. Go to ```software/apps``` folder and build the application using ```make``` command. We provide a makefile to generate the executable (e.g., hello.elf).
-There are two applications:
-	i. ```hello```: print ```Hello world from SweRV on FPGA!```
-	ii. ```sum```: compute sum of the numbers from 3 to 9.
-	
-	NOTE: The ```bsp``` folder has the startup file, linker loader and openocd script.
-	
-	NOTE: The ```common``` folder has printf, uart device functions and memory map information.
-	
-	NOTE: Here you need to use the relevant toolchain for the design you chose. If the design is the one with branch counters, then you probably need the toolchain which supports the new instructions(https://github.com/nbarazani/riscv-gnu-toolchain).
-
-10. Once we generate an application executable, we need to configure openocd+GDB and UART device.  
-    a. OpenOCD+GDB   
-	    1. Run openocd: `swerv_openocd.cfg` file inside `bsp` folder  
-	    `$ sudo openocd -f swerv_openocd.cfg`   
-  	    2. Use another terminal and run GDB. Then connect to openocd, 
-		   load and debug.
-		   
-            $riscv32-unknown-elf-gdb hello.elf < 
-			....		 
-			(gdb) target remote localhost:3333
-			....
-			(gdb) load
-		    ....
-		
-
-	b. UART: create serial connection with the uart interface 
-
-11.	If everything works fine, you can see a message on the UART terminal.
     
