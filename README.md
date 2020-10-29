@@ -115,20 +115,20 @@ Our customized version (displaying also Branch-Counters) can be found on:
 2. Fork https://github.com/chipsalliance/Cores-SweRV
 3. Modify Cores-SweRV repository to your own modified SweRV Core.
 4. Go to Cores-SweRVolf:
-	a. edit cores/swerv.core:
-		i. replace the name at the top:
+	1. edit cores/swerv.core:
+		1. replace the name at the top:
 			```name : <your_name>:cores:SweRV_EH1:1.7```
-		ii. replace the provider details at the bottom:
-```
+		2. replace the provider details at the bottom:
+			```
 			name    : github
 			user    : <your github user>
 			repo    : Cores-SweRV
 			version : <the commit version you’d like to use>
 			patches : [cast_to_enum.patch]
-```
-	b. edit swervolf.core:
-		i. replace dependency:
-```
+			```
+	2. edit swervolf.core:
+		1. replace dependency:
+			```
 			filesets:
 			  core:
    			    files:
@@ -146,8 +146,8 @@ Our customized version (displaying also Branch-Counters) can be found on:
      					- ">=<your name>:cores:SweRV_EH1:1.5"
       					- simple_spi
     					- wb_intercon
-```
-	c. Edit any RTL or data file you’d like to change. For example we changed rtl/swervolf_nexys.v, rtl/swervolf_core.v, rtl/swerv_wrapper.sv, data/swervolf_nexys.xdc in order to display the counters on the 7-Segment digits display.
+			```
+	3. Edit any RTL or data file you’d like to change. For example we changed rtl/swervolf_nexys.v, rtl/swervolf_core.v, rtl/swerv_wrapper.sv, data/swervolf_nexys.xdc in order to display the counters on the 7-Segment digits display.
 
 
 ### How to run on Nexys A7 
