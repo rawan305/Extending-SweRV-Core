@@ -162,14 +162,24 @@ For your modified SweRVolf version:
 For example, we used:  
 ```fusesoc library add swervolf https://github.com/nbarazani/Cores-SweRVolf```  
 
-6. ```fusesoc run --target=nexys_a7 swervolf```
-7. Compile your application:
+6. Oprtional: go to $SWERVOLF_ROOT/swervolf.core:
+	1. Change config parameters of your SweRV core in swerv_default_config section (for the full list of possible parameters see the relevant core repository):
+	```
+	swerv_default_config:
+	  generator: swerv_config
+	  position : first
+	    parameters:
+	    args : [-unset=assert_on, -set=reset_vec=0x80000000, -set=fpga_optimize=1]
+	```
+
+7. ```fusesoc run --target=nexys_a7 swervolf```
+8. Compile your application:
 	1. ```cp /path/to/source_files $SWERVOLF_ROOT/sw/```
 	2. ```cd $SWERVOLF_ROOT/sw```
 	3. ```make program_main_file.elf``` (for running from OpenOCD)
 	4. ```make program_main_file.vh``` (for booting from RAM)
 	5. ```cd $WORKSPACE``` 
-8. Running application using OpenOCD:
+9. Running application using OpenOCD:
 	1. Open first shell to download the design to FPGA:
 		1. ```Openocd -c "set BITFILE /path/to/bitfile" -f $SWERVOLF_ROOT/data/swervolf_nexys_program.cfg```
 		2. /path/to/bitfile (usually) = $WORKSPACE/build/swervolf_0.7/nexys_a7-vivado/swervolf_0.7.bit
@@ -185,7 +195,7 @@ For example, we used:
 		> reg pc 0
 		> resume
 		```
-9. Running application using bootrom_file:  
+10. Running application using bootrom_file:  
 You might prefer using different booting method explained on the original SweRVolf repository by Chips-Alliance.  
 For example, after stage 6 just type:  
 ```fusesoc run --target=nexys_a7 swervolf --bootrom_file=$SWERVOLF_ROOT/sw/ program_main_file.vh```  
