@@ -179,6 +179,12 @@ For example, we used:
 	3. ```make program_main_file.elf``` (for running from OpenOCD)
 	4. ```make program_main_file.vh``` (for booting from RAM)
 	5. ```cd $WORKSPACE``` 
+Note: these insturctions are relevant only if your code is written in assembly (see examples in $SWERVOLF_ROOT/sw). In order to run program written in c:
+	1. See cmark.c as an example.
+	2. Use auxiliary.h as implementation of printf (printing output to UART) and the start section to your program (include it at the top of your file)
+	3. Use link.ld to link your program.
+	4. Optional: Use branch_counters.h for our new Branch-Counters instructions.
+	5. Compile <TEST>.elft: ```riscv32-unknown-elf-gcc -nostdlib -o2 -nostartfiles -mabi=ilp32 -Tlink.ld <TEST>.c -o <TEST>.elf ```
 9. Running application using OpenOCD:
 	1. Open first shell to download the design to FPGA:
 		1. ```Openocd -c "set BITFILE /path/to/bitfile" -f $SWERVOLF_ROOT/data/swervolf_nexys_program.cfg```
@@ -200,6 +206,7 @@ You might prefer using different booting method explained on the original SweRVo
 For example, after stage 6 just type:  
 ```fusesoc run --target=nexys_a7 swervolf --bootrom_file=$SWERVOLF_ROOT/sw/ program_main_file.vh```  
 If the board is connected, after compilation is finished the program will be loaded to memory and boot from there.
+
 
 
     
