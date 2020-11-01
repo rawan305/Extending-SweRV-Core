@@ -203,7 +203,7 @@ For example, after stage 6 just type:
 If the board is connected, after compilation is finished the program will be loaded to memory and boot from there.
 
 
-<u>Note<\u>: To compile your application, the insturctions above in section 8 are relevant only if your code is written in assembly (see examples in $SWERVOLF_ROOT/sw). In order to run program written in C:
+<u>Note</u>: The insturctions above in section 8 are relevant only if your code is written in assembly (see examples in $SWERVOLF_ROOT/sw). In order to run program written in C:
 1. See cmark.c as an example.
 2. Use auxiliary.h as implementation of printf (printing output to UART) and the start section to your program (include it at the top of your file)
 3. Use link.ld to link your program (you might need to chage text/data sections' sizes)
