@@ -1,4 +1,4 @@
-# SweRV Cores Experiments
+# Extending SweRV Core RISC-V Processors
 
 This repository is a part of BSc final project at VLSI lab in the Technion.
 In this project we will explore working with SweRV Cores, from simulation to hardware.
