@@ -64,7 +64,7 @@ espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 * Edit Execution and Write Back stages according to the required result.
 
 
-## Branch & Branch Taken counters in SweRV Core
+## Designing Branch & Branch Taken counters in SweRV Core
 ```Cores-SweRV_Counters\Cores-SweRV``` is our new design.  
 In addition, a version of SweRV EH1 with these Branch-Counters and output interface of the conters' values is on: https://github.com/nbarazani/Cores-SweRV 
 ### Dependencies
