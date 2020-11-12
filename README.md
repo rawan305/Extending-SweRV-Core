@@ -13,12 +13,11 @@ Cores-SweRV, Cores-SweRV-EH2, Cores-SweRV-EL2 are linked to the original reposit
 ### How to run simulations
 * Setup RV_ROOT to point to the path of the SweRV Core design you chose in your local filesystem
 ```export RV_ROOT=/path/to/swerv```
-* create simulations' folder where you want log files will be written.
-* move to simulations' folder.
+* Create a new folder where you want log files will be written.
 * Determine your configuration {optional} - SweRV can be configured by running the $RV_ROOT/configs/swerv.config script:
 ```$RV_ROOT/configs/swerv.config -h``` for detailed help options
-* move the source files to ```$RV_ROOT/testbench/asm```
-* run simulation:
+* Move the source files to ```$RV_ROOT/testbench/asm```
+* Run simulation:
 ```
 make -f $RV_ROOT/tools/Makefile [<simulator>] [debug=1] [snapshot=<snapshot>] [target=<target>] [TEST=<test>] [TEST_DIR=<path_to_test_dir>] [CONF_PARAMS=<swerv.config option>]
 
