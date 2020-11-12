@@ -17,7 +17,7 @@ Cores-SweRV, Cores-SweRV-EH2, Cores-SweRV-EL2 are linked to the original reposit
 * move to simulations' folder.
 * Determine your configuration {optional} - SweRV can be configured by running the $RV_ROOT/configs/swerv.config script:
 ```$RV_ROOT/configs/swerv.config -h``` for detailed help options
-* move the source files to ```$RV_ROOT/testbench/asm``` (the file with main function is the one to use as target parameter)
+* move the source files to ```$RV_ROOT/testbench/asm```
 * run simulation:
 ```
 make -f $RV_ROOT/tools/Makefile [<simulator>] [debug=1] [snapshot=<snapshot>] [target=<target>] [TEST=<test>] [TEST_DIR=<path_to_test_dir>] [CONF_PARAMS=<swerv.config option>]
