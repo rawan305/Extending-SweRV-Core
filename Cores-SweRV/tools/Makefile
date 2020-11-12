@@ -25,12 +25,12 @@ snapshot = $(target)
 
 # Allow tool override
 SWERV_CONFIG = ${RV_ROOT}/configs/swerv.config
-IRUN = irun
+IRUN = xrun
 VCS = vcs
 VERILATOR = verilator
 VLOG = qverilog
 RIVIERA = riviera
-GCC_PREFIX = riscv32-unknown-elf# riscv64-unknown-elf
+GCC_PREFIX = riscv64-unknown-elf
 BUILD_DIR = snapshots/${snapshot}
 TBDIR = ${RV_ROOT}/testbench
 
@@ -46,6 +46,7 @@ ifdef debug
  IRUN_DEBUG = -access +rc
  IRUN_DEBUG_RUN = -input ${RV_ROOT}/testbench/input.tcl
  VCS_DEBUG = -debug_access
+ VERILATOR_DEBUG = --trace
  RIVIERA_DEBUG = +access +r
 endif
 
@@ -59,7 +60,7 @@ endif
 VPATH = $(TEST_DIR) $(BUILD_DIR) $(TBDIR)
 TBFILES = $(TBDIR)/tb_top.sv $(TBDIR)/ahb_sif.sv
 
-defines = $(BUILD_DIR)/common_defines.vh ${RV_ROOT}/design/include/swerv_types.sv 
+defines = $(BUILD_DIR)/common_defines.vh ${RV_ROOT}/design/include/swerv_types.sv
 includes = -I${RV_ROOT}/design/include -I${RV_ROOT}/design/lib  -I${BUILD_DIR}
 
 # CFLAGS for verilator generated Makefiles. Without -std=c++11 it complains for `auto` variables
@@ -87,8 +88,8 @@ verilator-build: ${TBFILES} ${BUILD_DIR}/defines.h test_tb_top.cpp
                 -I${RV_ROOT}/testbench \
 		-f ${RV_ROOT}/testbench/flist \
                 ${TBFILES} \
-                --top-module tb_top -exe test_tb_top.cpp --trace --autoflush
-	cp ${RV_ROOT}/testbench/test_tb_top.cpp obj_dir/
+                --top-module tb_top -exe test_tb_top.cpp --autoflush $(VERILATOR_DEBUG)
+	cp ${RV_ROOT}/testbench/test_tb_top.cpp obj_dir
 	$(MAKE) -C obj_dir/ -f Vtb_top.mk $(VERILATOR_MAKE_FLAGS)
 	touch verilator-build
 
@@ -103,7 +104,7 @@ vcs-build: ${TBFILES} ${BUILD_DIR}/defines.h
 	touch vcs-build
 
 irun-build: ${TBFILES} ${BUILD_DIR}/defines.h
-	$(IRUN) -64bit -elaborate $(IRUN_DEBUG) -q -sv -sysv  -nowarn CUVIHR -nclibdirpath . -nclibdirname swerv.build \
+	$(IRUN) -64bit -elaborate $(IRUN_DEBUG) -q -sv -sysv  -nowarn CUVIHR -xmlibdirpath . -xmlibdirname swerv.build \
 		-incdir ${RV_ROOT}/design/lib -incdir ${RV_ROOT}/design/include -incdir ${BUILD_DIR} -vlog_ext +.vh+.h\
 		$(defines)  -f ${RV_ROOT}/testbench/flist\
 		-top tb_top  ${TBFILES} -I${RV_ROOT}/testbench \
@@ -113,7 +114,6 @@ irun-build: ${TBFILES} ${BUILD_DIR}/defines.h
 riviera-build: ${TBFILES} ${BUILD_DIR}/defines.h
 	vlib work
 	vlog -work work \
-		-err VCP2694 W1 \
 		+incdir+${RV_ROOT}/design/lib \
 		+incdir+${RV_ROOT}/design/include \
 		+incdir+${BUILD_DIR} +libext+.v $(defines) \
@@ -125,12 +125,12 @@ verilator: program.hex verilator-build
 	./obj_dir/Vtb_top ${DEBUG_PLUS}
 
 irun: program.hex irun-build
-	$(IRUN) -64bit -abvglobalfailurelimit 1 +lic_queue -licqueue -status -nclibdirpath . -nclibdirname swerv.build \
+	$(IRUN) -64bit -abvglobalfailurelimit 1 +lic_queue -licqueue -status -xmlibdirpath . -xmlibdirname swerv.build \
 		 -snapshot ${snapshot} -r ${snapshot} $(IRUN_DEBUG_RUN)
 
 vcs: program.hex vcs-build
 	./simv $(DEBUG_PLUS) +vcs+lic+wait -l vcs.log
-        
+
 vlog: program.hex ${TBFILES} ${BUILD_DIR}/defines.h
 	$(VLOG) -l vlog.log -sv -mfcu +incdir+${BUILD_DIR}+${RV_ROOT}/design/include+${RV_ROOT}/design/lib\
         $(defines) -f ${RV_ROOT}/testbench/flist ${TBFILES} -R ${DEBUG_PLUS}
@@ -141,8 +141,7 @@ riviera: program.hex riviera-build
 ifeq ($(shell which $(GCC_PREFIX)-gcc 2> /dev/null),)
 program.hex: ${BUILD_DIR}/defines.h
 	@echo " !!! No $(GCC_PREFIX)-gcc in path, using canned hex files !!"
-	cp ${HEX_DIR}/$(TEST).program.hex program.hex
-	cp ${HEX_DIR}/$(TEST).data.hex data.hex
+	cp ${HEX_DIR}/$(TEST).hex program.hex
 else
 ifneq (,$(wildcard $(TEST_DIR)/$(TEST).makefile))
 program.hex:
@@ -151,23 +150,19 @@ else
 program.hex: $(TEST).o $(LINK)
 	@echo Building $(TEST)
 	$(GCC_PREFIX)-ld -m elf32lriscv --discard-none -T$(LINK) -o $(TEST).exe $(TEST).o
-	$(GCC_PREFIX)-objcopy -O verilog --only-section ".data*" --change-section-lma .data=0 $(TEST).exe data.hex
-	$(GCC_PREFIX)-objcopy -O verilog --only-section ".text*"  $(TEST).exe program.hex
+	$(GCC_PREFIX)-objcopy -O verilog $(TEST).exe program.hex
 	$(GCC_PREFIX)-objdump -S  $(TEST).exe > $(TEST).dis
-	$(GCC_PREFIX)-nm -f posix -C $(TEST).exe > $(TEST).tbl
 	@echo Completed building $(TEST)
 
 %.o : %.s ${BUILD_DIR}/defines.h
 	$(GCC_PREFIX)-cpp -I${BUILD_DIR}  $<  > $(TEST).cpp.s
 	$(GCC_PREFIX)-as -march=rv32gc $(TEST).cpp.s -o $(TEST).o
 
-# TEST_CFLAGS = -g -O3 -funroll-all-loops -DTIMES -DNOENUM -DHZ=60 
-# -Wno-implicit -save-temps -fno-common -falign-functions=4
 TEST_CFLAGS = -g -O3 -funroll-all-loops
 ABI = -mabi=ilp32 -march=rv32imc
 
 %.o : %.c ${BUILD_DIR}/defines.h
-	$(GCC_PREFIX)-gcc -I${BUILD_DIR} ${TEST_CFLAGS} ${ABI} -nostdlib -c $< -o $@	
+	$(GCC_PREFIX)-gcc -I${BUILD_DIR} ${TEST_CFLAGS} ${ABI} -nostdlib -c $< -o $@
 endif
 endif
 
@@ -175,4 +170,4 @@ help:
 	@echo Make sure the environment variable RV_ROOT is set.
 	@echo Possible targets: verilator vcs irun vlog riviera help clean all verilator-build irun-build vcs-build riviera-build program.hex
 
-.PHONY: help clean verilator vcs irun vlog riviera 
+.PHONY: help clean verilator vcs irun vlog riviera
