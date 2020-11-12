@@ -72,7 +72,7 @@ In addition, a version of SweRV EH1 with these Branch-Counters and output interf
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
 * espresso logic minimizer
 ### General Information
-We designed branch counter and branch-taken counter. The branch counter will count the number of conditional branches in the running code, and the branch-taken counter will count the number of conditional branches which their result was taken in the running code.
+We designed branch counter and branch-taken counter. The branch counter will count the number of conditional branches in the application code, and the branch-taken counter will count the number of conditional branches which their result was taken in the application code.
 In addition, we will support the following new instructions:
 1.	bcntson  - Start Counting – will enable the counting for each instruction which follows it.
 2.	bcntsoff - Stop Counting – will disable the counting for each instruction which follows it.
