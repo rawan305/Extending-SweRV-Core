@@ -10,9 +10,3 @@
 [submodule "Cores-SweRVolf"]
 	path = Cores-SweRVolf
 	url = https://github.com/chipsalliance/Cores-SweRVolf.git
-[submodule "my_Cores-SweRVolf"]
-	path = my_Cores-SweRVolf
-	url = https://github.com/nbarazani/Cores-SweRVolf.git
-[submodule "my_Cores-SweRV"]
-	path = my_Cores-SweRV
-	url = https://github.com/nbarazani/Cores-SweRV.git
