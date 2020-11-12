@@ -59,6 +59,7 @@ espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
 ./coredecode -in decode -legal > legal.e
 espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 ```
+* Copy the new equations to replace the ones on the end of ```design/dec/dec_decode_ctl.sv```.
 * Forward the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc.). Don't forget to define those indicators on the struct definition in ```design/include/swerv_types.sv```.
 * Edit Execution and Write Back stages according to the required result.
 
