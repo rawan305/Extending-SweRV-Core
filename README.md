@@ -1,14 +1,16 @@
 # SweRV Cores Experiments
 
-This repository is a part of final BSc project at the VLSI lab in the technion.
-In this project we will explore some methods and tools when using the open source SweRV Cores.
-We will focus mainly on the SweRV EH1 dsign, but it can be easily with some changes to the other designs.
+This repository is a part of BSc final project at the VLSI lab in the Technion.
+In this project we will explore different aspects of working with SweRV Cores, from simulation to hardware.
+The project's goal was to gey familier with the 3 designs and give an easier kickoff for future projects.
+We will focus mostly on the SweRV EH1 dsign, but with few adjustments it can be used on the other two.
 
 ## Benchmarks and Simulations
+Cores-SweRV, Cores-SweRV-EH2, Cores-SweRV-EL2 are linked to the original repositories (on the latest versions we visited while working on this project)
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
-### Instructions
+### How to run simulations
 * Setup RV_ROOT to point to the path of the SweRV Core design you chose in your local filesystem
 ```export RV_ROOT=/path/to/swerv```
 * go to folder of simulations where you want log files will be written.
@@ -35,17 +37,16 @@ CONF_PARAMS -  configuration parameter for swerv.config : ex: 'CONF_PARAMS=-unse
 
 
 ## Designing new RISC-V instructions with SweRV Core 
+An example of such design is in ```Cores-SweRV_new_instruction``` folder  
+We implemnted a simple additional instruction ADD3 - add 3 to a source register and write the result to a destination register.
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
 * espresso logic minimizer
-
-An example of such design is in ```Cores-SweRV_new_instruction``` folder where we implemnted a simple additional instruction which add 3 to a source register and write the result to a destination register.
-
 ### General Mode Of Work:
 * Define your instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
 * Define the indicators you would like the decoder will set for your case (you can add new indicators in the ```design/include/swerv_types.sv``` file.
-* Change the ```design/dec/decode``` to your new instructions.
+* Change the ```design/dec/decode``` - add the definitions of your new instruction (its format, the chosen indicators, definition for new indicators).
 * Calculate new equaitions:
 
  to generate all the equations from "decode" except legal equation:
@@ -58,30 +59,29 @@ espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
 ./coredecode -in decode -legal > legal.e
 espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 ```
-* Pass the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc.)
+* Pass the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc). Don't forget to define those indicators on their definition in ```design/include/swerv_types.sv```.
 * Change Execution and Write Back stages according to the required result.
 
 
 ## Branch & Branch Taken counters in SweRV Core
+```Cores-SweRV_Counters\Cores-SweRV``` is our new design.
+In addition there is a version of SweRV EH1 with Branch-Counters which also output their values on: https://github.com/nbarazani/Cores-SweRV 
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
 * espresso logic minimizer
-
 ### General Information
-In this experiment we wanted to design and implement branch counter and branch-taken counter. The branch counter will count the number of conditional branches in the running code, and the branch-taken counter will count the number of conditional branches which their result was taken in the running code.
-In addition, we will add support for a number of new instructions (in R-type format):
+On this part we decided to design and implement branch counter and branch-taken counter. The branch counter will count the number of conditional branches in the running code, and the branch-taken counter will count the number of conditional branches which their result was taken in the running code.
+In addition, we will support the following new instructions:
 1.	bcntson  - Start Counting – will enable the counting for each instruction which follows it.
 2.	bcntsoff - Stop Counting – will disable the counting for each instruction which follows it.
 3.	bcntrst  - Reset Branch Counter – will reset the branch counter to zero.
 4.	btcntrst - Reset Branch-Taken Counter – will reset the branch-taken counter to zero.
 5.	bcntrd   - Read Branch Counter – will read the value of the branch counter to destination register (rd).
 6.	btcntrd  - Read Branch-Taken Counter –  will read the value of the branch-taken counter to destination register (rd).
-
+  
 To install a RISC-V toolchain with the new instructions see: https://github.com/nbarazani/riscv-gnu-toolchain
-
-```Cores-SweRV_Counters\Cores-SweRV``` is the new design.
-
+  
 In the folder ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` you can also find 3 tests we simulated on the new design:
 * counters_test.s
 * counters_test2.s
@@ -89,15 +89,15 @@ In the folder ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` you can also 
 
 ```Cores-SweRV_Counters\branch_counters.h``` includes C wrapper functions for each one of the new instructions and 2 Macro that can be used at the beginning and the end of any simulation main code to reset counters and print their results (assuming a printf implementation exists).
 
-In addition there is a version of SweRV EH1 with Branch-Counters which also output their values on: https://github.com/nbarazani/Cores-SweRV
+
 
 
 ## FPGA implementation
 ### General
-We will present how to create Zedboard FPGA implementation for the SweRV Core EH1.
-The implementation is based on the one created by Chips-Alliance and WD for Nexys-A7: https://github.com/chipsalliance/Cores-SweRVolf 
+We will present how to create FPGA implementation for the SweRV Core EH1 on Nexys-A7.
+The implementation is based on the one created by Chips-Alliance and WD for Nexys-A7: https://github.com/chipsalliance/Cores-SweRVolf (also linked above)
 
-Our customized version (displaying also Branch-Counters) can be found on:
+Our customized versions (displaying also Branch-Counters on the Seven Segment display) can be found on:
 - https://github.com/nbarazani/Cores-SweRVolf
 - https://github.com/nbarazani/Cores-SweRV
 
@@ -110,7 +110,7 @@ Our customized version (displaying also Branch-Counters) can be found on:
 * RISC V Toolchain (with new instructions or without)
 * RISC V OpenOCD
 
-### How to use a modified SweRV core version
+### How to use a modified SweRV core version on FPGA:
 1. Fork https://github.com/chipsalliance/Cores-SweRVolf
 2. Fork https://github.com/chipsalliance/Cores-SweRV
 3. Modify Cores-SweRV repository to your own modified SweRV Core.
