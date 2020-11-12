@@ -1,8 +1,8 @@
 # SweRV Cores Experiments
 
-This repository is a part of BSc final project at the VLSI lab in the Technion.
-In this project we will explore different aspects of working with SweRV Cores, from simulation to hardware.
-The project's goal was to gey familier with the 3 designs and give an easier kickoff for future projects.
+This repository is a part of BSc final project at VLSI lab in the Technion.
+In this project we will explore working with SweRV Cores, from simulation to hardware.
+The project's goal was to be familier with the 3 designs and give an easier kickoff for future projects.
 We will focus mostly on the SweRV EH1 dsign, but with few adjustments it can be used on the other two.
 
 ## Benchmarks and Simulations
@@ -13,10 +13,11 @@ Cores-SweRV, Cores-SweRV-EH2, Cores-SweRV-EL2 are linked to the original reposit
 ### How to run simulations
 * Setup RV_ROOT to point to the path of the SweRV Core design you chose in your local filesystem
 ```export RV_ROOT=/path/to/swerv```
-* go to folder of simulations where you want log files will be written.
+* create simulations' folder where you want log files will be written.
+* move to simulations' folder.
 * Determine your configuration {optional} - SweRV can be configured by running the $RV_ROOT/configs/swerv.config script:
 ```$RV_ROOT/configs/swerv.config -h``` for detailed help options
-* put the source files of the testbench in the ```$RV_ROOT/testbench/asm``` folder
+* move the source files of the application in the ```$RV_ROOT/testbench/asm``` folder (the file with main function is the one to use as target parameter)
 * run simulation:
 ```
 make -f $RV_ROOT/tools/Makefile [<simulator>] [debug=1] [snapshot=<snapshot>] [target=<target>] [TEST=<test>] [TEST_DIR=<path_to_test_dir>] [CONF_PARAMS=<swerv.config option>]
@@ -33,7 +34,7 @@ TEST_DIR    -  alternative to test source directory testbench/asm
                for runs on custom configurations.
 CONF_PARAMS -  configuration parameter for swerv.config : ex: 'CONF_PARAMS=-unset=dccm_enable' to build with no DCCM
 ```
-* Notice: you can add a Makefile to your source file. Read $RV_ROOT/tools/Makefile for more information.
+* Notice: you can add a Makefile to your source file. Read ```$RV_ROOT/tools/Makefile``` for more information.
 
 
 ## Designing new RISC-V instructions with SweRV Core 
@@ -43,10 +44,10 @@ We implemnted a simple additional instruction ADD3 - add 3 to a source register 
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
 * espresso logic minimizer
-### General Mode Of Work:
+### How to:
 * Define your instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
-* Define the indicators you would like the decoder will set for your case (you can add new indicators in the ```design/include/swerv_types.sv``` file.
-* Change the ```design/dec/decode``` - add the definitions of your new instruction (its format, the chosen indicators, definition for new indicators).
+* Define the indicators you would like the decoder will set for your instruction (it is possible to add new indicators in the ```design/include/swerv_types.sv``` file).
+* Edit ```design/dec/decode``` - add the definitions of your new instruction (its format, the chosen indicators, definition for new indicators).
 * Calculate new equaitions:
 
  to generate all the equations from "decode" except legal equation:
@@ -59,13 +60,13 @@ espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
 ./coredecode -in decode -legal > legal.e
 espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 ```
-* Pass the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc). Don't forget to define those indicators on their definition in ```design/include/swerv_types.sv```.
+* Forward the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc.). Don't forget to define those indicators on the struct definition in ```design/include/swerv_types.sv```.
 * Change Execution and Write Back stages according to the required result.
 
 
 ## Branch & Branch Taken counters in SweRV Core
-```Cores-SweRV_Counters\Cores-SweRV``` is our new design.
-In addition there is a version of SweRV EH1 with Branch-Counters which also output their values on: https://github.com/nbarazani/Cores-SweRV 
+```Cores-SweRV_Counters\Cores-SweRV``` is our new design.  
+In addition, a version of SweRV EH1 with these Branch-Counters and output interface of the conters' values is on: https://github.com/nbarazani/Cores-SweRV 
 ### Dependencies
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
@@ -80,14 +81,13 @@ In addition, we will support the following new instructions:
 5.	bcntrd   - Read Branch Counter – will read the value of the branch counter to destination register (rd).
 6.	btcntrd  - Read Branch-Taken Counter –  will read the value of the branch-taken counter to destination register (rd).
   
-To install a RISC-V toolchain with the new instructions see: https://github.com/nbarazani/riscv-gnu-toolchain
+To install a RISC-V toolchain with the new instructions see: https://github.com/nbarazani/riscv-gnu-toolchain  
+```Cores-SweRV_Counters\branch_counters.h``` includes C wrapper functions for each one of the new instructions and 2 Macro that can be used at the beginning and the end of any simulation main code to reset counters and print their results (assuming a printf implementation exists).  
   
 In the folder ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` you can also find 3 tests we simulated on the new design:
 * counters_test.s
 * counters_test2.s
 * counters_test3.s
-
-```Cores-SweRV_Counters\branch_counters.h``` includes C wrapper functions for each one of the new instructions and 2 Macro that can be used at the beginning and the end of any simulation main code to reset counters and print their results (assuming a printf implementation exists).
 
 
 
