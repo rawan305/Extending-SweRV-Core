@@ -1,0 +1,18 @@
+[submodule "Cores-SweRV"]
+	path = Cores-SweRV
+	url = https://github.com/chipsalliance/Cores-SweRV.git
+[submodule "Cores-SweRV-EH2"]
+	path = Cores-SweRV-EH2
+	url = https://github.com/chipsalliance/Cores-SweRV-EH2.git
+[submodule "Cores-SweRV-EL2"]
+	path = Cores-SweRV-EL2
+	url = https://github.com/chipsalliance/Cores-SweRV-EL2.git
+[submodule "Cores-SweRVolf"]
+	path = Cores-SweRVolf
+	url = https://github.com/chipsalliance/Cores-SweRVolf.git
+[submodule "my_Cores-SweRVolf"]
+	path = my_Cores-SweRVolf
+	url = https://github.com/nbarazani/Cores-SweRVolf.git
+[submodule "my_Cores-SweRV"]
+	path = my_Cores-SweRV
+	url = https://github.com/nbarazani/Cores-SweRV.git
