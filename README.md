@@ -11,13 +11,13 @@ Cores-SweRV, Cores-SweRV-EH2, Cores-SweRV-EL2 - linked to the original repositor
 * Verilator (4.030 or later) must be installed on the system if running with verilator.
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
 ### How to run simulations
-* Setup RV_ROOT to point to the path of the SweRV Core design you chose in your local filesystem
+1. Setup RV_ROOT to point to the path of the SweRV Core design you chose in your local filesystem
 ```export RV_ROOT=/path/to/swerv```
-* Create a new folder where you want log files will be written.
-* Determine your configuration {optional} - SweRV can be configured by running the $RV_ROOT/configs/swerv.config script:
+2. Create a new folder where you want log files will be written.
+3. Determine your configuration {optional} - SweRV can be configured by running the $RV_ROOT/configs/swerv.config script:
 ```$RV_ROOT/configs/swerv.config -h``` for detailed help options
-* Move the source files to ```$RV_ROOT/testbench/asm```
-* Run simulation:
+4. Move the source files to ```$RV_ROOT/testbench/asm```
+5. Run simulation:
 ```
 make -f $RV_ROOT/tools/Makefile [<simulator>] [debug=1] [snapshot=<snapshot>] [target=<target>] [TEST=<test>] [TEST_DIR=<path_to_test_dir>] [CONF_PARAMS=<swerv.config option>]
 
@@ -44,10 +44,10 @@ ADD3 - add 3 to a source register and write the result to a destination register
 * RISCV tool chain (based on gcc version 7.3 or higher) must be installed so that it can be used to prepare RISCV binaries to run.
 * espresso logic minimizer
 ### General guide for supporting new instruction with the SweRV Cores:
-* Define instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
-* Define the indicators the decoder would set for the instruction (it is possible to add new indicators in the ```design/include/swerv_types.sv``` file).
-* Edit ```design/dec/decode``` - add the definitions of the new instruction (its format, the chosen indicators, definition for new indicators).
-* Calculate new equaitions:
+1. Define instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
+2. Define the indicators the decoder would set for the instruction (it is possible to add new indicators in the ```design/include/swerv_types.sv``` file).
+3 .Edit ```design/dec/decode``` - add the definitions of the new instruction (its format, the chosen indicators, definition for new indicators).
+4. Calculate new equaitions:
 
  to generate all the equations from "decode" except legal equation:
 ```
@@ -59,9 +59,9 @@ espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
 ./coredecode -in decode -legal > legal.e
 espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 ```
-* Copy the new equations to replace the ones on the end of ```design/dec/dec_decode_ctl.sv```.
-* Forward the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc.). Don't forget to define those indicators on the struct definition in ```design/include/swerv_types.sv```.
-* Edit the Execution and Write Back stages according to the required result.
+5. Copy the new equations to replace the ones on the end of ```design/dec/dec_decode_ctl.sv```.
+6. Forward the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc.). Don't forget to define those indicators on the struct definition in ```design/include/swerv_types.sv```.
+7. Edit the Execution and Write Back stages according to the required result.
 
 
 ## Designing Branch & Branch Taken counters in SweRV Core
