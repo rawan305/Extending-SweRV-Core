@@ -208,5 +208,5 @@ If the board is connected, after compilation is finished the program will be loa
 2. Use auxiliary.h as implementation of printf (printing output to UART) and the start section to your program (include it at the top of your file)
 3. Use link.ld to link your program (you might need to chage text/data sections' sizes)
 4. Optional: Use branch_counters.h for our new Branch-Counters instructions.
-5. Compile <TEST>.elf: ```riscv32-unknown-elf-gcc -nostdlib -o2 -nostartfiles -mabi=ilp32 -Tlink.ld <TEST>.c -o <TEST>.elf ```
+5. Compile <TEST>.elf: ```$GCC_PREFIX-gcc -nostdlib -o2 -nostartfiles -mabi=ilp32 -Tlink.ld <TEST>.c -o <TEST>.elf ```
     
