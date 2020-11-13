@@ -2,7 +2,7 @@
 
 This repository is a part of BSc final project at VLSI lab in the Technion.
 In this project we experimented working with SweRV Cores, from simulation to hardware.
-The project's goal was to get experience with the three designs and give an easier kickoff for future projects.
+The project's goal was to have experience with the three designs and give an easier kickoff for future projects.
 We focused mainly on the SweRV EH1 dsign, but with few adjustments it can be used on the other two.
 
 ## Benchmarks and Simulations
