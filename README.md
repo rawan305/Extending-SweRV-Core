@@ -95,9 +95,9 @@ espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 ## FPGA implementation
 ### General
 We will present how to create FPGA implementation for the SweRV Core EH1 on Nexys-A7.
-The design and instructions are taken from: https://github.com/chipsalliance/Cores-SweRVolf (also linked above)
+The design and instructions are taken from: https://github.com/chipsalliance/Cores-SweRVolf
 
-Our customized versions (displaying also Branch-Counters on the Seven Segment display) can be found on:
+Our customized versions (displaying also Branch-Counters on the Seven Segment display):
 - https://github.com/nbarazani/Cores-SweRVolf
 - https://github.com/nbarazani/Cores-SweRV
 
