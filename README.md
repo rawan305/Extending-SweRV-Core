@@ -162,7 +162,7 @@ For your modified SweRVolf version:
 For example, we used:  
 ```fusesoc library add swervolf https://github.com/nbarazani/Cores-SweRVolf```  
 
-6. Oprtional: go to $SWERVOLF_ROOT/swervolf.core:
+6. Oprtional: edit $SWERVOLF_ROOT/swervolf.core:
 	1. Change config parameters of your SweRV core in swerv_default_config section (for the full list of possible parameters see the relevant core repository):
 	```
 	swerv_default_config:
