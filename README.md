@@ -84,7 +84,7 @@ espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 * To install a RISC-V toolchain with the new instructions: https://github.com/nbarazani/riscv-gnu-toolchain  
 * ```Cores-SweRV_Counters\branch_counters.h``` - C wrapper functions for each one of the new instructions.  
   
-* ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` includes 3 tests we simulated on the new design:
+* ```Cores-SweRV_Counters\Cores-SweRV\testbench\asm``` - 3 tests from the simulations we tested on the new design:
 	1. counters_test.s
 	2. counters_test2.s
 	3. counters_test3.s
