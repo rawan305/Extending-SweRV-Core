@@ -46,7 +46,7 @@ ADD3 - add 3 to a source register and write the result to a destination register
 ### General guide for supporting new instruction with the SweRV Cores:
 1. Define instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
 2. Define the indicators the decoder would set for the instruction (it is possible to add new indicators in the ```design/include/swerv_types.sv``` file).
-3 .Edit ```design/dec/decode``` - add the definitions of the new instruction (its format, the chosen indicators, definition for new indicators).
+3. Edit ```design/dec/decode``` - add the definitions of the new instruction (its format, the chosen indicators, definition for new indicators).
 4. Calculate new equaitions:
 
  to generate all the equations from "decode" except legal equation:
