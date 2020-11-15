@@ -45,7 +45,7 @@ ADD3 - add 3 to a source register and write the result to a destination register
 * espresso logic minimizer
 ### General guide:
 1. Define instruction format - in accordance with the RISC-V ISA instructions types and formats, using only available opcodes.
-2. Define the indicators the decoder would set for the instruction (it is possible to add new indicators in the ```design/include/swerv_types.sv``` file).
+2. Define the indicators the decoder would set for the instruction (it is possible to add new indicators on ```design/include/swerv_types.sv```).
 3. Edit ```design/dec/decode``` - add the definitions of the new instruction (its format, the chosen indicators, definition for new indicators).
 4. Calculate new equaitions:
 
@@ -59,7 +59,7 @@ espresso -Dso -oeqntott coredecode.e | ./addassign -pre out.  > equations
 ./coredecode -in decode -legal > legal.e
 espresso -Dso -oeqntott legal.e | ./addassign -pre out. > legal_equation
 ```
-5. Copy the new equations to replace the ones on the end of ```design/dec/dec_decode_ctl.sv```.
+5. Copy the new equations to replace the ones at the end of ```design/dec/dec_decode_ctl.sv```.
 6. Forward the new indicators to other relevant structs (most likely the alu_pkt for alu instructions, dest_pkt_t to keep values in pipe at the decoder etc.). Don't forget to define those indicators on the struct definition in ```design/include/swerv_types.sv```.
 7. Edit the Execution and Write Back stages according to the required result.
 
